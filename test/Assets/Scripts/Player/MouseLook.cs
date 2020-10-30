@@ -6,7 +6,6 @@ public class MouseLook : MonoBehaviour
 {
     public float mouseSentitivity = 100f;
     public Transform playerBody;
-
     float xRotation = 0f;
 
     void Start()
@@ -14,7 +13,6 @@ public class MouseLook : MonoBehaviour
       Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X")*mouseSentitivity*Time.deltaTime;
