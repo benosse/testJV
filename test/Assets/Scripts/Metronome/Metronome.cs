@@ -44,6 +44,7 @@ public class Metronome : MonoBehaviour
     {
         this.metronomeScript = gameObject.GetComponent<Hv_metronome_AudioLib>();
         this.metronomeScript.RegisterSendHook();
+        //soubscription à l'event
         this.metronomeScript.FloatReceivedCallback += this.UpdateMetronome;
     }
 
