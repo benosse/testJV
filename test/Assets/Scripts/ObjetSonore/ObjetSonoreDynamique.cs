@@ -9,8 +9,10 @@ using UnityEngine;
 //sa méthode playSound joue son son
 //***********************************************************************
 
+
 public class ObjetSonoreDynamique : ObjetSonore
 {
+
 
     //trigger par la sousZone quand l'objetSonore rentre dedans
     public void EnterSousZone(SousZone sousZone)
@@ -18,7 +20,7 @@ public class ObjetSonoreDynamique : ObjetSonore
         //change la sousZone
         this.sousZone = sousZone;
         //change la fréquence
-        this.SetFrequence(this.sousZone.GetFrequence());
+        this.SetFrequence(this.sousZone.GetFrequence() * Random.Range(1,4));
 
         //Debug.Log("entrée dans la sousZone " + sousZone.gameObject.name);
 
@@ -28,12 +30,11 @@ public class ObjetSonoreDynamique : ObjetSonore
     //trigger par la sousZone quand l'objetSonore en sort
     public void ExitSousZone(SousZone sousZone)
     {
-      if (this.sousZone == sousZone)
-      {
-        //Debug.Log("sortie de la sousZone " + sousZone.gameObject.name);
-        this.sousZone = null;
-        this.SetFrequence(0);
-      }
+        if (this.sousZone == sousZone)
+        {
+            //Debug.Log("sortie de la sousZone " + sousZone.gameObject.name);
+            this.sousZone = null;
+            this.SetFrequence(0);
+        }
     }
-
 }

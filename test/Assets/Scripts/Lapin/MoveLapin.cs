@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 //cette classe implémente l'interface EnregistrementAuMetronome pour pouvoir régair aux variations du métronome
-public class MoveLapin : MonoBehaviour, EnregistrementAuMetronome
+public class MoveLapin : MonoBehaviour, EnregistrementMesure
 {
     public float speed;
     public float jumpForce;
@@ -24,7 +24,7 @@ public class MoveLapin : MonoBehaviour, EnregistrementAuMetronome
 
         //on s'enregistre auprès du métronome pour recevoir des updates quand la mesure change
         GameObject metronome = GameObject.Find("Metronome");
-        metronome.GetComponent<Metronome>().Enregistrer(this);
+        metronome.GetComponent<Metronome>().EnregistrerMesure(this);
     }
 
     //déplacement du lapin

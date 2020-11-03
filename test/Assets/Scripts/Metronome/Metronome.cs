@@ -9,7 +9,8 @@ public class Metronome : MonoBehaviour
 
 
     //une liste d'objets enregistrés.
-    private List<EnregistrementAuMetronome> enregistrements;
+    private List<EnregistrementMesure> enregistrementsMesure;
+    private List<EnregistrementPeriodeNoire> enregistrementsPeriodeNoire;
 
     private int metroMesureCount;
     private float periodeNoire;
@@ -33,8 +34,10 @@ public class Metronome : MonoBehaviour
     private int qdCroche;
 
 
-    void Awake() {
-        this.enregistrements = new List<EnregistrementAuMetronome>();
+    void Awake()
+    {
+        this.enregistrementsMesure = new List<EnregistrementMesure>();
+        this.enregistrementsPeriodeNoire = new List<EnregistrementPeriodeNoire>();
     }
 
     void Start()
@@ -50,18 +53,35 @@ public class Metronome : MonoBehaviour
         switch (mes.receiverName)
         {
             case "metroMesureCount":
+                
                 int nouvelleMesure = (int)mes.value;
                 Debug.Log("mesure reçue: " + nouvelleMesure);
-                //on déclenche des évènements à chaque changement de mesure
+
+                
+                //TODO: on devrait pas avoir à checker si la mesure est nouvelle, pourtant on reçoit deux fois l'évènement...
                 if (nouvelleMesure > this.metroMesureCount)
                 {
-                    this.ChangementDeMesure();
+                    //enregistre la nouvelle valeur
+                    this.metroMesureCount = nouvelleMesure;
+
+                    //préviens les objets enregistrés
+                    foreach (EnregistrementMesure obj in this.enregistrementsMesure)
+                {
+                    obj.ChangementDeMesure();
                 }
-                this.metroMesureCount = nouvelleMesure;
+                }
+                
                 break;
 
             case "periodeNoire":
+                //enregistre la nouvelle valeur
                 this.periodeNoire = mes.value;
+                //préviens les objets enregistrés
+                foreach (EnregistrementPeriodeNoire obj in this.enregistrementsPeriodeNoire)
+                {
+                    obj.ChangementDePeriodeNoire(this.periodeNoire);
+                }
+
                 break;
 
             case "staticMesure":
@@ -73,16 +93,17 @@ public class Metronome : MonoBehaviour
         }
     }
 
-    private void ChangementDeMesure()
+
+
+    //ajoute l'objet en parametre à la liste d'objest à prévenir en cas de changement de mesure
+    public void EnregistrerMesure(EnregistrementMesure obj)
     {
-        foreach (EnregistrementAuMetronome obj in this.enregistrements)
-        {
-            obj.ChangementDeMesure();
-        }
+        enregistrementsMesure.Add(obj);
     }
 
-    public void Enregistrer(EnregistrementAuMetronome obj)
+    //ajoute l'objet en parametre à la liste d'objest à prévenir en cas de changement de periode de la noire
+    public void EnregistrerPeriodeNoire(EnregistrementPeriodeNoire obj)
     {
-        enregistrements.Add(obj);
+        enregistrementsPeriodeNoire.Add(obj);
     }
 }

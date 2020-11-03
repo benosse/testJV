@@ -14,12 +14,8 @@ public abstract class ObjetSonore : MonoBehaviour
     [SerializeField] protected float frequence;
     protected SousZone sousZone;
     protected ObjetSonoreManager manager;
-
     protected Hv_oscilloSix_AudioLib oscillo;
 
-    protected AudioMixerGroup mixer;
-
-    public int[] midFreqPattern;
 
     public virtual void Start()
     {
@@ -29,26 +25,14 @@ public abstract class ObjetSonore : MonoBehaviour
 
         //création de l'oscillo
         oscillo = gameObject.AddComponent<Hv_oscilloSix_AudioLib>();
-        mixer = gameObject.GetComponent<AudioSource>().outputAudioMixerGroup;
     }
 
-    public void SetMixerCycleTime(float value)
-    {
-        this.mixer.audioMixer.SetFloat("cycleTime", value);
-        Debug.Log("set cycle " + value);
-    }
 
+    //change la fréquence de son oscillo
     public void SetFrequence(float frequence)
     {
         this.frequence = frequence;
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
-    }
-
-
-    //joue la fréquence
-    //appelé par objetSonoreManager
-    public void PlaySound()
-    {
     }
 
 
