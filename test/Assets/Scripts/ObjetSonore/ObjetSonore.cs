@@ -13,18 +13,17 @@ public abstract class ObjetSonore : MonoBehaviour
 {
     [SerializeField] protected float frequence;
     protected SousZone sousZone;
-    protected ObjetSonoreManager manager;
     protected Hv_oscilloSix_AudioLib oscillo;
 
 
     public virtual void Start()
     {
-        //ajout dans le manager
-        manager = GameObject.Find("ObjetSonoreManager").GetComponent<ObjetSonoreManager>();
-        manager.AddObjetSonore(this);
 
         //création de l'oscillo
-        oscillo = gameObject.AddComponent<Hv_oscilloSix_AudioLib>();
+        //oscillo = gameObject.AddComponent<Hv_oscilloSix_AudioLib>();
+
+        //ou bien récupération si on le crée dans l'inspecteur
+        oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
     }
 
 

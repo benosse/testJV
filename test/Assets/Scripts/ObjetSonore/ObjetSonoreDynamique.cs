@@ -20,7 +20,7 @@ public class ObjetSonoreDynamique : ObjetSonore
         //change la sousZone
         this.sousZone = sousZone;
         //change la fréquence
-        this.SetFrequence(this.sousZone.GetFrequence() * Random.Range(1,4));
+        this.SetFrequence(this.sousZone.GetFrequence() / 2 + this.sousZone.GetNbHarmoniques()*10);
 
         //Debug.Log("entrée dans la sousZone " + sousZone.gameObject.name);
 
