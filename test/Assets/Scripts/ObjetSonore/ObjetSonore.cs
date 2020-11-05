@@ -15,7 +15,14 @@ public abstract class ObjetSonore : MonoBehaviour
     protected SousZone sousZone;
     protected Hv_oscilloSix_AudioLib oscillo;
     
-    public Enveloppe enveloppe;
+    //Pour chaque paramètre de l'audiolib on associe une enveloppe, et une fonction delegate (= callback)
+    public Enveloppe enveloppeGain;
+
+    public Enveloppe enveloppeNbHarmo;
+
+    public Enveloppe enveloppeMidFreq;
+
+
 
 
     public virtual void Start()
@@ -23,23 +30,45 @@ public abstract class ObjetSonore : MonoBehaviour
         //ou bien récupération si on le crée dans l'inspecteur
         oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
 
-        //todo : si il y n'y  pas d'enveloppes
-        enveloppe.EnregistrerObjetSonore(this);
+
+        if (enveloppeGain)
+        {
+            enveloppeGain.Enregistrer(setGain);
+        }
+        if (enveloppeNbHarmo)
+        {
+            enveloppeNbHarmo.Enregistrer(SetNbHarmoniques);
+        }
+        if (enveloppeMidFreq)
+        {
+            enveloppeMidFreq.Enregistrer(SetMidFreq);
+        }
     }
 
-    public void SetGain(float gain)
+
+
+
+    //Setters
+    public void setGain(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Gain, gain*0.2f);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Gain, valeur*0.2f);
     }
 
+    public void SetNbHarmoniques(float valeur)
+    {
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, valeur*5);
+    }
 
-    //change la fréquence de son oscillo
     public void SetFrequence(float frequence)
     {
+        //enregistrement de la fréquence - utile ?
         this.frequence = frequence;
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
     }
 
-
+    public void SetMidFreq(float valeur)
+    {
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Midfreq, 5 - valeur*5);
+    }
 }
 
