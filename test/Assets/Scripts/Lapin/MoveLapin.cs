@@ -13,7 +13,6 @@ public class MoveLapin : MonoBehaviour, EnregistrementStaticNoire
     private Vector3 direction;
     private Rigidbody rb;
 
-    private int rythme;
 
 
     void Start()
@@ -23,7 +22,7 @@ public class MoveLapin : MonoBehaviour, EnregistrementStaticNoire
         this.speed = 4f;
         this.jumpForce = 1f;
         this.direction = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
-        this.rythme = (int)Random.Range(0,4);
+
 
         //on s'enregistre auprès du métronome pour recevoir des updates quand la mesure change
         GameObject metronome = GameObject.Find("Metronome");
@@ -48,10 +47,6 @@ public class MoveLapin : MonoBehaviour, EnregistrementStaticNoire
     //méthode appelée par le métronome à chaque changement de mesure
     public void ChangementDeStaticNoire(int staticNoire)
     {
-        //Debug.Log("lapin noire: " + staticNoire);
-        if (this.rythme == staticNoire)
-        {
-            this.Jump();
-        }      
+            this.Jump();   
     }
 }
