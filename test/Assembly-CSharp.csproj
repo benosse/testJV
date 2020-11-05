@@ -45,10 +45,12 @@
      <Compile Include="Assets\Audio\audioLibs\oscilloSix\Hv_oscilloSix_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\vcaAsdLfo\Hv_vcaAsdLfo_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\wtOsc\Hv_wtOsc_AudioLib.cs" />
+     <Compile Include="Assets\Enveloppe.cs" />
      <Compile Include="Assets\Scripts\Frequences.cs" />
      <Compile Include="Assets\Scripts\Lapin\MoveLapin.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementMesure.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementPeriodeNoire.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticNoire.cs" />
      <Compile Include="Assets\Scripts\Metronome\Metronome.cs" />
      <Compile Include="Assets\Scripts\Mixers\MixerManager.cs" />
      <Compile Include="Assets\Scripts\ObjetSonore\ObjetSonore.cs" />

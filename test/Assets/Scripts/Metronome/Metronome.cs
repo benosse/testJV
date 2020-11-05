@@ -11,6 +11,7 @@ public class Metronome : MonoBehaviour
     //une liste d'objets enregistrés.
     private List<EnregistrementMesure> enregistrementsMesure;
     private List<EnregistrementPeriodeNoire> enregistrementsPeriodeNoire;
+    private List<EnregistrementStaticNoire> enregistrementsStaticNoire;
 
     private int metroMesureCount;
     private float periodeNoire;
@@ -38,6 +39,7 @@ public class Metronome : MonoBehaviour
     {
         this.enregistrementsMesure = new List<EnregistrementMesure>();
         this.enregistrementsPeriodeNoire = new List<EnregistrementPeriodeNoire>();
+        this.enregistrementsStaticNoire = new List<EnregistrementStaticNoire>();
     }
 
     void Start()
@@ -48,6 +50,7 @@ public class Metronome : MonoBehaviour
         this.metronomeScript.FloatReceivedCallback += this.UpdateMetronome;
     }
 
+
     void UpdateMetronome(Hv_metronome_AudioLib.FloatMessage mes)
     {
 
@@ -56,8 +59,6 @@ public class Metronome : MonoBehaviour
             case "metroMesureCount":
                 
                 int nouvelleMesure = (int)mes.value;
-                Debug.Log("mesure reçue: " + nouvelleMesure);
-
                 
                 //TODO: on devrait pas avoir à checker si la mesure est nouvelle, pourtant on reçoit deux fois l'évènement...
                 if (nouvelleMesure > this.metroMesureCount)
@@ -85,6 +86,17 @@ public class Metronome : MonoBehaviour
 
                 break;
 
+            case "staticNoire":
+                //enregistre la nouvelle valeur
+                this.staticNoire = (int) mes.value;
+                //préviens les objets enregistrés
+                foreach (EnregistrementStaticNoire obj in this.enregistrementsStaticNoire)
+                {
+                    obj.ChangementDeStaticNoire(this.staticNoire);
+                    //Debug.Log("metro " + this.staticNoire);
+                }
+                break;
+
             case "staticMesure":
                 this.staticMesure = (int)mes.value;
                 break;
@@ -106,5 +118,11 @@ public class Metronome : MonoBehaviour
     public void EnregistrerPeriodeNoire(EnregistrementPeriodeNoire obj)
     {
         enregistrementsPeriodeNoire.Add(obj);
+    }
+
+    //ajoute l'objet en parametre à la liste d'objest à prévenir en cas de changement de la noire static
+    public void EnregistrerStaticNoire(EnregistrementStaticNoire obj)
+    {
+        enregistrementsStaticNoire.Add(obj);
     }
 }

@@ -14,16 +14,22 @@ public abstract class ObjetSonore : MonoBehaviour
     [SerializeField] protected float frequence;
     protected SousZone sousZone;
     protected Hv_oscilloSix_AudioLib oscillo;
+    
+    public Enveloppe enveloppe;
 
 
     public virtual void Start()
     {
-
-        //création de l'oscillo
-        //oscillo = gameObject.AddComponent<Hv_oscilloSix_AudioLib>();
-
         //ou bien récupération si on le crée dans l'inspecteur
         oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+
+        //todo : si il y n'y  pas d'enveloppes
+        enveloppe.EnregistrerObjetSonore(this);
+    }
+
+    public void SetGain(float gain)
+    {
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Gain, gain*0.2f);
     }
 
 

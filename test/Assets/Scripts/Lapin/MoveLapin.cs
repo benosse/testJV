@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 //cette classe implémente l'interface EnregistrementAuMetronome pour pouvoir régair aux variations du métronome
-public class MoveLapin : MonoBehaviour, EnregistrementMesure
+public class MoveLapin : MonoBehaviour, EnregistrementStaticNoire
 {
     public float speed;
     public float jumpForce;
@@ -13,18 +13,21 @@ public class MoveLapin : MonoBehaviour, EnregistrementMesure
     private Vector3 direction;
     private Rigidbody rb;
 
+    private int rythme;
+
 
     void Start()
     {
         this.rb = GetComponent<Rigidbody>();
 
         this.speed = 4f;
-        this.jumpForce = 4f;
+        this.jumpForce = 1f;
         this.direction = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
+        this.rythme = (int)Random.Range(0,4);
 
         //on s'enregistre auprès du métronome pour recevoir des updates quand la mesure change
         GameObject metronome = GameObject.Find("Metronome");
-        metronome.GetComponent<Metronome>().EnregistrerMesure(this);
+        metronome.GetComponent<Metronome>().EnregistrerStaticNoire((EnregistrementStaticNoire)this);
     }
 
     //déplacement du lapin
@@ -43,8 +46,12 @@ public class MoveLapin : MonoBehaviour, EnregistrementMesure
 
 
     //méthode appelée par le métronome à chaque changement de mesure
-    public void ChangementDeMesure()
+    public void ChangementDeStaticNoire(int staticNoire)
     {
-        this.Jump();
+        //Debug.Log("lapin noire: " + staticNoire);
+        if (this.rythme == staticNoire)
+        {
+            this.Jump();
+        }      
     }
 }
