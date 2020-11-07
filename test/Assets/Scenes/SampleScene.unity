@@ -2302,7 +2302,7 @@ MonoBehaviour:
   modeResetAdsr: 1
   releaseTimeAdsr: 1600
   seuilAdsr: 0.5
-  smoothEnvAdsr: 0.1
+  smoothEnvAdsr: 20
   sustainTimeAdsr: 1600
   triggerAdsr: 0
 --- !u!114 &1753438268
@@ -2319,6 +2319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   env0: {fileID: 0}
   valeur: 0
+  valeurInterpolee: 0
 --- !u!82 &1753438269
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2426,7 +2427,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeAnimation
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675586, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2575,7 +2576,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeAnimation
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675586, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2700,7 +2701,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeAnimation
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675586, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -144,7 +144,7 @@ public class Hv_adsr_Editor : Editor {
     // smoothEnvAdsr
     GUILayout.BeginHorizontal();
     float smoothEnvAdsr = _dsp.GetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr);
-    float newSmoothenvadsr = EditorGUILayout.Slider("smoothEnvAdsr", smoothEnvAdsr, 0.0f, 20.0f);
+    float newSmoothenvadsr = EditorGUILayout.Slider("smoothEnvAdsr", smoothEnvAdsr, 20.0f, 20000.0f);
     if (smoothEnvAdsr != newSmoothenvadsr) {
       _dsp.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, newSmoothenvadsr);
     }
@@ -236,7 +236,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
   public float modeResetAdsr = 1.0f;
   public float releaseTimeAdsr = 1600.0f;
   public float seuilAdsr = 0.5f;
-  public float smoothEnvAdsr = 0.1f;
+  public float smoothEnvAdsr = 20.0f;
   public float sustainTimeAdsr = 1600.0f;
   public float triggerAdsr = 0.0f;
 
@@ -312,7 +312,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
         break;
       }
       case Parameter.Smoothenvadsr: {
-        x = Mathf.Clamp(x, 0.0f, 20.0f);
+        x = Mathf.Clamp(x, 20.0f, 20000.0f);
         smoothEnvAdsr = x;
         break;
       }

@@ -9,13 +9,15 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
 
     //la valeur entre 0 et 1 de l'enveloppe
     [SerializeField] private float valeur;
+    [SerializeField] private float valeurInterpolee;
 
     //le metronome
     private Metronome metronome;
 
 
     //la fonction déléguée à appeler après des objets enregistrés
-    public delegate void Del(float valeur);
+    public delegate void Del(float valeur) ;
+    
 
     //la liste de fonctions déléguées
     private List<Del> enregistrements;
@@ -39,6 +41,10 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
         //récupération de l'audiolib
         this.env0 = GetComponent<Hv_adsr_AudioLib>();
 
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Moderesetadsr, 0f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Seuiladsr, 0.5f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, 20f);
+
         //accroche la fonction de callBack 'UpdateEnveloppe' (définie plus bas) à la réception de données depuis l'audiolib
         this.env0.RegisterSendHook();
         this.env0.FloatReceivedCallback += this.UpdateEnv0;     
@@ -48,6 +54,7 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
     public void ChangementDeStaticMesure(int staticMesure)
     {
          this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Triggeradsr, 1f); 
+         
     }
 
     /*public void ChangementDeStaticNoire(int staticNoire)
@@ -63,10 +70,10 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
 
         Debug.Log("nouvelle per noire : " + periodeNoire);
 
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Attacktimeadsr, periodeNoire * (float) (4 * 2/6));
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Decaytimeadsr, periodeNoire * (float) (4* 1/6));
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Sustaintimeadsr, periodeNoire * (float)(4*1/12));
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Releasetimeadsr, periodeNoire * (float)(4* 7/12));
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Attacktimeadsr, periodeNoire * (float) 8/6);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Decaytimeadsr, periodeNoire * (float) 4/6);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Sustaintimeadsr, periodeNoire * (float)4/12);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Releasetimeadsr, periodeNoire * (float)28/12);
     }
 
 
@@ -76,7 +83,7 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
 
         switch (mes.receiverName)
         {
-            case "envAdsr":
+            case "smoothedEnvAdsr":
             //enrgistre la nouvelle valeur
             this.valeur = mes.value;
 
@@ -87,6 +94,20 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
             }
 
             break;
+/*
+            case "smoothedEnvAdsr":
+            //enrgistre la nouvelle valeur
+            this.valeurInterpolee = mes.value;
+            
+
+            //préviens les objets enregistrés
+            foreach (Del fonction in enregistrements)
+            {
+                fonction(this.valeurInterpolee);
+            }
+
+            break;*/
+        
 
             case "periodeTimeAdsr":
             break;

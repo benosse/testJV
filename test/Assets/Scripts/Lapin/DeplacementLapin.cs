@@ -13,7 +13,7 @@ public class DeplacementLapin : MonoBehaviour
     public float acceleration;
 
     //L'enveloppe pur gérer l'animation
-    public Enveloppe enveloppeAnimation;
+    public Env0 enveloppeAnimation;
 
     private Vector3 direction;
     private Rigidbody rb;
