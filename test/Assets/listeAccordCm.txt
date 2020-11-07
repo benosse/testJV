@@ -1,0 +1,35 @@
+toniques par accord 
+I    C4        261.626
+II   D4        293.665 
+III  D#4     311.127 
+IV  F4        349.228
+V   G4       391.995
+VI  G#4     415.305
+VII  A#4    466.164
+
+tierces par accord
+I   Eb4     311.127
+II  F4       349.228
+III F#4    369.994
+IV Ab4    415.305
+V  Bb4    466.164
+VI B4      493.883
+VII C#5   554.365 
+
+quinte
+I    G4      391.995
+II   Ab5     415.305
+III  A#4    466.164
+IV  C5       523.251
+V   D5       587.33
+VI  D#5    622.254
+VII E         659.255
+
+septieme
+I   Bb4        466.164
+II  B4          493.883
+III  C#5       //          554.365
+IV  Eb5       622.254
+V   F5         698.456
+VI  F#5       //            739.989
+VII G#5      830.609
