@@ -36,31 +36,38 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticDbCroche.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticBlanche.cs" />
      <Compile Include="Assets\Scripts\Zones\SousZone.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\tonique\Hv_tonique_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloSix\Hv_oscilloSix_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticCroche.cs" />
      <Compile Include="Assets\Audio\audioLibs\vcaAsdLfo\Hv_vcaAsdLfo_AudioLib.cs" />
+     <Compile Include="Assets\Audio\audioLibs\metronome\Hv_metronome_AudioLib.cs" />
      <Compile Include="Assets\Scripts\ObjetSonore\ObjetSonore.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementMesure.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementPeriodeNoire.cs" />
      <Compile Include="Assets\Scripts\ObjetSonore\ObjetSonoreDynamique.cs" />
      <Compile Include="Assets\Scripts\ObjetSonore\ObjetSonoreStatique.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticQdCroche.cs" />
      <Compile Include="Assets\Scripts\Lapin\DeplacementLapin.cs" />
      <Compile Include="Assets\Scripts\Metronome\Metronome.cs" />
      <Compile Include="Assets\Scripts\Mixers\MixerManager.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\tierce\Hv_tierce_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\septieme\Hv_septieme_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticNoire.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticMesure.cs" />
      <Compile Include="Assets\Scripts\Enveloppes\Enveloppe.cs" />
+     <Compile Include="Assets\Scripts\Enveloppes\Env0.cs" />
+     <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticTpCroche.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\quinte\Hv_quinte_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Frequences.cs" />
      <Compile Include="Assets\Audio\audioLibs\asd\Hv_asd_AudioLib.cs" />
+     <Compile Include="Assets\Audio\audioLibs\adsr\Hv_adsr_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\wtOsc\Hv_wtOsc_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Zones\Zone.cs" />
-     <Compile Include="Assets\Audio\audioLibs\metronome\Hv_metronome_AudioLib.cs" />
-     <Compile Include="Assets\Audio\audioLibs\adsr\Hv_adsr_AudioLib.cs" />
      <None Include="Assets\listeAccordCm.txt" />
      <None Include="Assets\methodeVarPd.txt" />
     <Reference Include="UnityEngine">

@@ -141,6 +141,15 @@ public class Hv_adsr_Editor : Editor {
     }
     GUILayout.EndHorizontal();
 
+    // smoothEnvAdsr
+    GUILayout.BeginHorizontal();
+    float smoothEnvAdsr = _dsp.GetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr);
+    float newSmoothenvadsr = EditorGUILayout.Slider("smoothEnvAdsr", smoothEnvAdsr, 0.0f, 20.0f);
+    if (smoothEnvAdsr != newSmoothenvadsr) {
+      _dsp.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, newSmoothenvadsr);
+    }
+    GUILayout.EndHorizontal();
+
     // sustainTimeAdsr
     GUILayout.BeginHorizontal();
     float sustainTimeAdsr = _dsp.GetFloatParameter(Hv_adsr_AudioLib.Parameter.Sustaintimeadsr);
@@ -190,6 +199,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
     Moderesetadsr = 0xAE15F8F1,
     Releasetimeadsr = 0x5BDFCB23,
     Seuiladsr = 0x30B93C36,
+    Smoothenvadsr = 0xC6514CC9,
     Sustaintimeadsr = 0xA0FC7AD,
     Triggeradsr = 0x3C23D823,
   }
@@ -226,6 +236,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
   public float modeResetAdsr = 1.0f;
   public float releaseTimeAdsr = 1600.0f;
   public float seuilAdsr = 0.5f;
+  public float smoothEnvAdsr = 0.1f;
   public float sustainTimeAdsr = 1600.0f;
   public float triggerAdsr = 0.0f;
 
@@ -251,6 +262,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
       case Parameter.Moderesetadsr: return modeResetAdsr;
       case Parameter.Releasetimeadsr: return releaseTimeAdsr;
       case Parameter.Seuiladsr: return seuilAdsr;
+      case Parameter.Smoothenvadsr: return smoothEnvAdsr;
       case Parameter.Sustaintimeadsr: return sustainTimeAdsr;
       case Parameter.Triggeradsr: return triggerAdsr;
       default: return 0.0f;
@@ -297,6 +309,11 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
       case Parameter.Seuiladsr: {
         x = Mathf.Clamp(x, 0.0f, 1.0f);
         seuilAdsr = x;
+        break;
+      }
+      case Parameter.Smoothenvadsr: {
+        x = Mathf.Clamp(x, 0.0f, 20.0f);
+        smoothEnvAdsr = x;
         break;
       }
       case Parameter.Sustaintimeadsr: {
@@ -366,6 +383,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
     _context.SendFloatToReceiver((uint) Parameter.Moderesetadsr, modeResetAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Releasetimeadsr, releaseTimeAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Seuiladsr, seuilAdsr);
+    _context.SendFloatToReceiver((uint) Parameter.Smoothenvadsr, smoothEnvAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Sustaintimeadsr, sustainTimeAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Triggeradsr, triggerAdsr);
   }
@@ -480,7 +498,7 @@ class Hv_adsr_Context {
 
   private delegate void SendHook(IntPtr context, string sendName, uint sendHash, IntPtr message);
 
-  public Hv_adsr_Context(double sampleRate, int poolKb=10, int inQueueKb=10, int outQueueKb=4) {
+  public Hv_adsr_Context(double sampleRate, int poolKb=10, int inQueueKb=11, int outQueueKb=6) {
     gch = GCHandle.Alloc(msgQueue);
     _context = hv_adsr_new_with_options(sampleRate, poolKb, inQueueKb, outQueueKb);
     hv_setPrintHook(_context, new PrintHook(OnPrint));
