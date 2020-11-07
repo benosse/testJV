@@ -897,8 +897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frequence: 0
   enveloppeGain: {fileID: 0}
-  enveloppeNbHarmo: {fileID: 1338613966}
-  enveloppeMidFreq: {fileID: 1338613966}
+  enveloppeNbHarmo: {fileID: 0}
+  enveloppeMidFreq: {fileID: 0}
 --- !u!65 &525174004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2486,17 +2486,17 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeGain
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeNbHarmo
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeMidFreq
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675593, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_Name
@@ -2526,6 +2526,11 @@ PrefabInstance:
         type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].inWeight
       value: 0.10750128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687818090842675710, guid: efb7634cbeb39a54ca2fbc30a852022d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efb7634cbeb39a54ca2fbc30a852022d, type: 3}
@@ -2630,17 +2635,17 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeGain
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeNbHarmo
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeMidFreq
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 0}
     - target: {fileID: 6687818090842675593, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_Name
@@ -2670,6 +2675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].inWeight
       value: 0.10750128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687818090842675710, guid: efb7634cbeb39a54ca2fbc30a852022d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efb7634cbeb39a54ca2fbc30a852022d, type: 3}
@@ -2760,17 +2770,17 @@ PrefabInstance:
         type: 3}
       propertyPath: enveloppeGain
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeNbHarmo
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675590, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: enveloppeMidFreq
       value: 
-      objectReference: {fileID: 1338613966}
+      objectReference: {fileID: 1753438268}
     - target: {fileID: 6687818090842675593, guid: efb7634cbeb39a54ca2fbc30a852022d,
         type: 3}
       propertyPath: m_Name

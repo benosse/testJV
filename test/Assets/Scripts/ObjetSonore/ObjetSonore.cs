@@ -16,11 +16,11 @@ public abstract class ObjetSonore : MonoBehaviour
     protected Hv_oscilloSix_AudioLib oscillo;
     
     //Pour chaque paramètre de l'audiolib on associe une enveloppe, et une fonction delegate (= callback)
-    public Enveloppe enveloppeGain;
+    public Env0 enveloppeGain;
 
     public Enveloppe enveloppeNbHarmo;
 
-    public Enveloppe enveloppeMidFreq;
+    public Env0 enveloppeMidFreq;
 
 
 
@@ -29,6 +29,7 @@ public abstract class ObjetSonore : MonoBehaviour
     {
         //ou bien récupération si on le crée dans l'inspecteur
         oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Smoothgain, 10f);
 
 
         if (enveloppeGain)
