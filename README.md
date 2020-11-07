@@ -1,5 +1,8 @@
-# testJV
-Notre dépot de test
+rappel:
+créer un .gitignore dans le dossier "test" (pas à la racine) et le remplir avec https://github.com/github/gitignore/blob/master/Unity.gitignore
+
+--------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 # les commandes git:
