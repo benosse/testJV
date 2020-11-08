@@ -144,9 +144,18 @@ public class Hv_adsr_Editor : Editor {
     // smoothEnvAdsr
     GUILayout.BeginHorizontal();
     float smoothEnvAdsr = _dsp.GetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr);
-    float newSmoothenvadsr = EditorGUILayout.Slider("smoothEnvAdsr", smoothEnvAdsr, 20.0f, 20000.0f);
+    float newSmoothenvadsr = EditorGUILayout.Slider("smoothEnvAdsr", smoothEnvAdsr, 10.0f, 2000.0f);
     if (smoothEnvAdsr != newSmoothenvadsr) {
       _dsp.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, newSmoothenvadsr);
+    }
+    GUILayout.EndHorizontal();
+
+    // smoothReset
+    GUILayout.BeginHorizontal();
+    float smoothReset = _dsp.GetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothreset);
+    float newSmoothreset = EditorGUILayout.Slider("smoothReset", smoothReset, 0.0f, 1.0f);
+    if (smoothReset != newSmoothreset) {
+      _dsp.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothreset, newSmoothreset);
     }
     GUILayout.EndHorizontal();
 
@@ -200,6 +209,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
     Releasetimeadsr = 0x5BDFCB23,
     Seuiladsr = 0x30B93C36,
     Smoothenvadsr = 0xC6514CC9,
+    Smoothreset = 0x3927FBE6,
     Sustaintimeadsr = 0xA0FC7AD,
     Triggeradsr = 0x3C23D823,
   }
@@ -237,6 +247,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
   public float releaseTimeAdsr = 1600.0f;
   public float seuilAdsr = 0.5f;
   public float smoothEnvAdsr = 20.0f;
+  public float smoothReset = 0.0f;
   public float sustainTimeAdsr = 1600.0f;
   public float triggerAdsr = 0.0f;
 
@@ -263,6 +274,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
       case Parameter.Releasetimeadsr: return releaseTimeAdsr;
       case Parameter.Seuiladsr: return seuilAdsr;
       case Parameter.Smoothenvadsr: return smoothEnvAdsr;
+      case Parameter.Smoothreset: return smoothReset;
       case Parameter.Sustaintimeadsr: return sustainTimeAdsr;
       case Parameter.Triggeradsr: return triggerAdsr;
       default: return 0.0f;
@@ -312,8 +324,13 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
         break;
       }
       case Parameter.Smoothenvadsr: {
-        x = Mathf.Clamp(x, 20.0f, 20000.0f);
+        x = Mathf.Clamp(x, 10.0f, 2000.0f);
         smoothEnvAdsr = x;
+        break;
+      }
+      case Parameter.Smoothreset: {
+        x = Mathf.Clamp(x, 0.0f, 1.0f);
+        smoothReset = x;
         break;
       }
       case Parameter.Sustaintimeadsr: {
@@ -384,6 +401,7 @@ public class Hv_adsr_AudioLib : MonoBehaviour {
     _context.SendFloatToReceiver((uint) Parameter.Releasetimeadsr, releaseTimeAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Seuiladsr, seuilAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Smoothenvadsr, smoothEnvAdsr);
+    _context.SendFloatToReceiver((uint) Parameter.Smoothreset, smoothReset);
     _context.SendFloatToReceiver((uint) Parameter.Sustaintimeadsr, sustainTimeAdsr);
     _context.SendFloatToReceiver((uint) Parameter.Triggeradsr, triggerAdsr);
   }
@@ -498,7 +516,7 @@ class Hv_adsr_Context {
 
   private delegate void SendHook(IntPtr context, string sendName, uint sendHash, IntPtr message);
 
-  public Hv_adsr_Context(double sampleRate, int poolKb=10, int inQueueKb=11, int outQueueKb=6) {
+  public Hv_adsr_Context(double sampleRate, int poolKb=10, int inQueueKb=12, int outQueueKb=3) {
     gch = GCHandle.Alloc(msgQueue);
     _context = hv_adsr_new_with_options(sampleRate, poolKb, inQueueKb, outQueueKb);
     hv_setPrintHook(_context, new PrintHook(OnPrint));

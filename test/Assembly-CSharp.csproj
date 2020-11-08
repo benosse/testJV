@@ -68,6 +68,7 @@
      <Compile Include="Assets\Audio\audioLibs\adsr\Hv_adsr_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\wtOsc\Hv_wtOsc_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Zones\Zone.cs" />
+     <Compile Include="Assets\Scripts\Lapin\DeplacementLapinBS.cs" />
      <None Include="Assets\listeAccordCm.txt" />
      <None Include="Assets\methodeVarPd.txt" />
     <Reference Include="UnityEngine">

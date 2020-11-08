@@ -42,8 +42,22 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
         this.env0 = GetComponent<Hv_adsr_AudioLib>();
 
         this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Moderesetadsr, 0f);
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Seuiladsr, 0.5f);
-        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, 20f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Seuiladsr, 0.2f);
+
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, 500f);
+
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Attacktimeadsr, 800);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Decaytimeadsr,800);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Sustaintimeadsr, 50);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Releasetimeadsr, 1000);
+
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Formeattackadsr,0f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Formedecayadsr, 1f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Formereleaseadsr, 2f);
+        this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothreset, 0f);
+
+        
+        
 
         //accroche la fonction de callBack 'UpdateEnveloppe' (définie plus bas) à la réception de données depuis l'audiolib
         this.env0.RegisterSendHook();
@@ -69,11 +83,12 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
     {
 
         Debug.Log("nouvelle per noire : " + periodeNoire);
-
+/*
         this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Attacktimeadsr, periodeNoire * (float) 8/6);
         this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Decaytimeadsr, periodeNoire * (float) 4/6);
         this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Sustaintimeadsr, periodeNoire * (float)4/12);
         this.env0.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Releasetimeadsr, periodeNoire * (float)28/12);
+        */
     }
 
 
@@ -109,8 +124,7 @@ public class Env0 : MonoBehaviour, EnregistrementStaticMesure, EnregistrementPer
             break;*/
         
 
-            case "periodeTimeAdsr":
-            break;
+            
             
         }
     }
