@@ -78,11 +78,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Displacement: 0.29
-    - Smoothness: -1.94
+    - Displacement: 0.01
+    - Smoothness: 0
     - Vector1_860F2F5: 0.3
-    - Vector1_AF9DA691: 2
-    - Vector1_CB4D2EF1: 0.3
+    - Vector1_AF9DA691: 0.456
+    - Vector1_CB4D2EF1: 1
     - Vector1_FC95466: 2
     - _AlphaClip: 0
     - _Blend: 0
@@ -106,8 +106,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Deep_Water_Color: {r: 0.5754717, g: 0.3555981, b: 0.5494593, a: 1}
-    - Shallow_Water_Color: {r: 0.22232285, g: 0.06786222, b: 0.5754717, a: 1}
+    - Deep_Water_Color: {r: 0.15644488, g: 0.0627451, b: 0.39607844, a: 1}
+    - Shallow_Water_Color: {r: 0.2950338, g: 0.3801799, b: 0.8018868, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
