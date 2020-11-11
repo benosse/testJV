@@ -1,106 +1,92 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/***************************************************************************************
+BZ et Nico
+interface de toutes les enveloppes
+***************************************************************************************/
 
+public delegate void Del(float valeur);
 
-/**********************************************************************************************
-BZ
-Une enveloppe génère un float entre 0 et 1
-Ellee est associée à une AudioLib
-Les réglages se font via l'inspecteur
-
-**********************************************************************************************/
-
-public class Enveloppe : MonoBehaviour, EnregistrementStaticNoire, EnregistrementPeriodeNoire
+public class Enveloppe : MonoBehaviour
 {
-    [SerializeField] private Hv_asd_AudioLib enveloppe;
 
-    //la valeur entre 0 et 1 de l'enveloppe
-    [SerializeField] private float valeur;
+    [SerializeField] protected Hv_adsr_AudioLib enveloppe;
 
     //le metronome
-    private Metronome metronome;
-
-
-    //la fonction déléguée à appeler après des objets enregistrés
-    public delegate void Del(float valeur);
+    protected Metronome metronome;
 
     //la liste de fonctions déléguées
-    private List<Del> enregistrements;
+    protected List<Del> enregistrementsBruts;
+    protected List<Del> enregistrementsDoux;
+    //TODO pour chgmt phases
+
+    [SerializeField] protected float valeurBrute;
+    [SerializeField] protected float valeurDouce;
 
 
 
-    void Awake() {
-       enregistrements = new List<Del>();
+    public void Awake() {
+       enregistrementsBruts = new List<Del>();
+       enregistrementsDoux = new List<Del>();
     }
 
-
-
-    void Start()
-    {
+    public virtual void Start() {
 
         //enregistrement de l'enveloppe aurpès du métronome
         this.metronome = GameObject.Find("Metronome").GetComponent<Metronome>();
-        this.metronome.EnregistrerStaticNoire((EnregistrementStaticNoire)this);
-        this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
 
         //récupération de l'audiolib
-        this.enveloppe = GetComponent<Hv_asd_AudioLib>();
+        this.enveloppe = GetComponent<Hv_adsr_AudioLib>();
 
         //accroche la fonction de callBack 'UpdateEnveloppe' (définie plus bas) à la réception de données depuis l'audiolib
         this.enveloppe.RegisterSendHook();
-        this.enveloppe.FloatReceivedCallback += this.UpdateEnveloppe;     
+        this.enveloppe.FloatReceivedCallback += this.UpdateEnveloppe;  
     }
 
-
-    public void ChangementDeStaticNoire(int staticNoire)
+   
+    //la méthode appelée par le métronome quand il change de mesure
+    public void EnregistrerBrut(Del fonction)
     {
-        Debug.Log("trigger asd");
-         this.enveloppe.SetFloatParameter(Hv_asd_AudioLib.Parameter.Triggerasd, 1f); 
+        this.enregistrementsBruts.Add(fonction);
     }
-
-
-
-    public void ChangementDePeriodeNoire(float periodeNoire) 
+    public void EnregistrerDoux(Del fonction)
     {
-
-        Debug.Log("nouvelle per noire : " + periodeNoire);
-
-        this.enveloppe.SetFloatParameter(Hv_asd_AudioLib.Parameter.Attacktimeasd, periodeNoire * 1/6);
-        this.enveloppe.SetFloatParameter(Hv_asd_AudioLib.Parameter.Sustaintimeasd, periodeNoire * (float)0.1/6);
-        this.enveloppe.SetFloatParameter(Hv_asd_AudioLib.Parameter.Decaytimeasd, periodeNoire * (float) 4.9/6);
+        this.enregistrementsDoux.Add(fonction);
     }
-
-
+    
     //Cette fonction est un callBack : elle est appelée automatiquement à chaque fois que l'audiolib envoie une nouvelle valeur 'mes'
-    private void UpdateEnveloppe(Hv_asd_AudioLib.FloatMessage mes) 
+    private void UpdateEnveloppe(Hv_adsr_AudioLib.FloatMessage mes) 
     {
 
         switch (mes.receiverName)
         {
-            case "envAsd":
+            case "envAdsr":
             //enrgistre la nouvelle valeur
-            this.valeur = mes.value;
+            this.valeurBrute = mes.value;
 
             //préviens les objets enregistrés
-            foreach (Del fonction in enregistrements)
+            foreach (Del fonction in enregistrementsBruts)
             {
-                fonction(this.valeur);
+                fonction(this.valeurBrute);
             }
 
             break;
 
-            case "periodeTimeAsd":
+            case "smoothedEnvAdsr":
+            //enrgistre la nouvelle valeur
+            this.valeurDouce = mes.value;
+
+            //préviens les objets enregistrés
+            foreach (Del fonction in enregistrementsDoux)
+            {
+                fonction(this.valeurDouce);
+            }
             break;
+
+            
             
         }
     }
-
-    public void Enregistrer(Del fonction)
-    {
-        this.enregistrements.Add(fonction);
-    }
-
-
 }

@@ -16,33 +16,35 @@ public abstract class ObjetSonore : MonoBehaviour
     protected Hv_oscilloSix_AudioLib oscillo;
     
     //Pour chaque paramètre de l'audiolib on associe une enveloppe, et une fonction delegate (= callback)
-    public Env0 enveloppeGain;
+    public Enveloppe enveloppeGain;
 
     public Enveloppe enveloppeNbHarmo;
 
-    public Env0 enveloppeMidFreq;
+    public Enveloppe enveloppeMidFreq;
 
-
+    private void Awake() {
+        oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+    }
 
 
     public virtual void Start()
     {
         //ou bien récupération si on le crée dans l'inspecteur
-        oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+        
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Smoothgain, 10f);
 
 
         if (enveloppeGain)
         {
-            enveloppeGain.Enregistrer(setGain);
+            enveloppeGain.EnregistrerBrut(setGain);
         }
         if (enveloppeNbHarmo)
         {
-            enveloppeNbHarmo.Enregistrer(SetNbHarmoniques);
+            enveloppeNbHarmo.EnregistrerBrut(SetNbHarmoniques);
         }
         if (enveloppeMidFreq)
         {
-            enveloppeMidFreq.Enregistrer(SetMidFreq);
+            enveloppeMidFreq.EnregistrerBrut(SetMidFreq);
         }
     }
 
@@ -52,12 +54,12 @@ public abstract class ObjetSonore : MonoBehaviour
     //Setters
     public void setGain(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Gain, valeur*0.2f);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Gain, valeur*0.05f);
     }
 
     public void SetNbHarmoniques(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, valeur*5);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, valeur*2);
     }
 
     public void SetFrequence(float frequence)
@@ -69,7 +71,7 @@ public abstract class ObjetSonore : MonoBehaviour
 
     public void SetMidFreq(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Midfreq, 5 - valeur*5);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Midfreq, 5 - valeur*2);
     }
 }
 

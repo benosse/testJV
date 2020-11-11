@@ -25,24 +25,40 @@ public class SousZone : MonoBehaviour
 
     //les objets sonores dans la zone
     private List<ObjetSonore> objetSonores;
+    private List<ObjetSonoreStatique> objetSonoresStatiques;
 
+    private void Awake() {
+        this.oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+        this.zone = this.transform.parent.GetComponent<Zone>();
+        this.objetSonores = new List<ObjetSonore>();
+        this.objetSonoresStatiques = new List<ObjetSonoreStatique>();
+
+        foreach (Transform child in transform) { 
+            objetSonoresStatiques.Add(child.gameObject.GetComponent<ObjetSonoreStatique>());
+        }
+}
 
 
     //Récupération de la zone parent et calcul de la fréquence
     void Start()
     {
-        this.zone = this.transform.parent.GetComponent<Zone>();
-        this.oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
+        
+        
         this.nbHarmoniques = 0;
-        this.objetSonores = new List<ObjetSonore>();
-        SetFrequence();  
+        
+        this.SetFrequence();   
     }
 
     public void SetFrequence()
     {
         this.frequence = this.zone.GetFrequenceOfNote(this.note);  
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
-        Debug.Log("oscillo de la zone: " + this.oscillo);
+        Debug.Log(this.frequence);
+        foreach(ObjetSonoreStatique obj in objetSonoresStatiques){
+            obj.SetFrequence(this.frequence);
+
+        }
+        
     }
 
 
@@ -73,8 +89,13 @@ public class SousZone : MonoBehaviour
             //ajout à la liste
             this.objetSonores.Add((ObjetSonore) objetSonore);
             this.nbHarmoniques = this.objetSonores.Count;
+
+            //calcul de la fréquence de l'objet
+
+
+            //objetSonore.SetFrequence()
             //update de l'objet sonore
-            objetSonore.EnterSousZone(this);
+            //objetSonore.EnterSousZone(this);
 
             //update du son de la zone
             this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, this.nbHarmoniques);

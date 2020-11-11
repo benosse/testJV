@@ -14,7 +14,7 @@ public class DeplacementLapin : MonoBehaviour
     public float scaleVal;
 
     //L'enveloppe pur gérer l'animation
-    public Env0 enveloppeAnimation;
+    public Enveloppe enveloppeAnimation;
 
     private Vector3 direction;
     private Rigidbody rb;
@@ -42,7 +42,7 @@ public class DeplacementLapin : MonoBehaviour
         //enregistrement auprès de l'enveloppe
         if (enveloppeAnimation)
         {
-            enveloppeAnimation.Enregistrer(Animation);
+            enveloppeAnimation.EnregistrerDoux(Animation);
         }
     }
 
@@ -66,7 +66,7 @@ public class DeplacementLapin : MonoBehaviour
         rb.transform.localScale = new Vector3(1+scaledValue, 1+scaledValue, 1+scaledValue);
         this.scaleVal = valeur ;*/
 
-        rb.transform.localScale = new Vector3(0.2f+valeur*4, 0.2f+valeur*4, 0.2f+valeur*4);
+        rb.transform.localScale = new Vector3(2f+valeur/2, 2f+valeur/2, 2f+valeur/2);
 
     }
 

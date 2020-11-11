@@ -41,6 +41,7 @@
      <Compile Include="Assets\Scripts\Zones\SousZone.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\tonique\Hv_tonique_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloSix\Hv_oscilloSix_AudioLib.cs" />
+     <Compile Include="Assets\Scripts\Enveloppes\Enveloppe.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticCroche.cs" />
      <Compile Include="Assets\Audio\audioLibs\vcaAsdLfo\Hv_vcaAsdLfo_AudioLib.cs" />
@@ -59,16 +60,17 @@
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\septieme\Hv_septieme_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticNoire.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticMesure.cs" />
-     <Compile Include="Assets\Scripts\Enveloppes\Enveloppe.cs" />
+     <Compile Include="Assets\Scripts\Enveloppes\Env1.cs" />
      <Compile Include="Assets\Scripts\Enveloppes\Env0.cs" />
      <Compile Include="Assets\Scripts\Metronome\EnregistrementStaticTpCroche.cs" />
      <Compile Include="Assets\Audio\audioLibs\oscilloFixed\quinte\Hv_quinte_AudioLib.cs" />
+     <Compile Include="Assets\Scripts\Ballon\Ballon.cs" />
      <Compile Include="Assets\Scripts\Frequences.cs" />
      <Compile Include="Assets\Audio\audioLibs\asd\Hv_asd_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\adsr\Hv_adsr_AudioLib.cs" />
      <Compile Include="Assets\Audio\audioLibs\wtOsc\Hv_wtOsc_AudioLib.cs" />
      <Compile Include="Assets\Scripts\Zones\Zone.cs" />
-     <Compile Include="Assets\Scripts\Lapin\DeplacementLapinBS.cs" />
+     <Compile Include="Assets\Scripts\Enveloppes\Env2.cs" />
      <None Include="Assets\listeAccordCm.txt" />
      <None Include="Assets\methodeVarPd.txt" />
     <Reference Include="UnityEngine">

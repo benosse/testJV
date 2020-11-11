@@ -15,10 +15,12 @@ public class ObjetSonoreStatique : ObjetSonore
     {
         //appel du start de base
         base.Start();
+        
 
         //récupération de la sousZone et de la fréquence
         this.sousZone = gameObject.transform.parent.gameObject.GetComponent<SousZone>();
-        this.SetFrequence(this.sousZone.GetFrequence());
+        //this.SetFrequence(this.sousZone.GetFrequence());
+        Debug.Log("freqZone: " + this.sousZone.GetFrequence());
 
     }
 }
