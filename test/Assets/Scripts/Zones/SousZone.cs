@@ -24,18 +24,18 @@ public class SousZone : MonoBehaviour
     [SerializeField] protected int nbHarmoniques;
 
     //les objets sonores dans la zone
-    private List<ObjetSonore> objetSonores;
-    private List<ObjetSonoreStatique> objetSonoresStatiques;
+    private List<OscilloSixManager> OscilloSixManagers;
+    private List<OscilloSixManagerStatique> OscilloSixManagersStatiques;
 
     private void Awake() {
 
         this.oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
         this.zone = this.transform.parent.GetComponent<Zone>();
-        this.objetSonores = new List<ObjetSonore>();
-        this.objetSonoresStatiques = new List<ObjetSonoreStatique>();
+        this.OscilloSixManagers = new List<OscilloSixManager>();
+        this.OscilloSixManagersStatiques = new List<OscilloSixManagerStatique>();
 
         foreach (Transform child in transform) { 
-            objetSonoresStatiques.Add(child.gameObject.GetComponent<ObjetSonoreStatique>());
+            OscilloSixManagersStatiques.Add(child.gameObject.GetComponent<OscilloSixManagerStatique>());
         }
 }
 
@@ -52,7 +52,7 @@ public class SousZone : MonoBehaviour
         this.frequence = this.zone.GetFrequenceOfNote(this.note);  
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
         Debug.Log(this.frequence);
-        foreach(ObjetSonoreStatique obj in objetSonoresStatiques){
+        foreach(OscilloSixManagerStatique obj in OscilloSixManagersStatiques){
             obj.SetFrequence(this.frequence);
         }        
     }
@@ -74,24 +74,24 @@ public class SousZone : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 
-        ObjetSonoreDynamique objetSonore = other.GetComponent<ObjetSonoreDynamique>();
+        OscilloSixManagerDynamique OscilloSixManager = other.GetComponent<OscilloSixManagerDynamique>();
 
-        if (objetSonore == null)
+        if (OscilloSixManager == null)
         {
             Debug.Log("collision sans objet sonore");
         }
         else
         {
             //ajout à la liste
-            this.objetSonores.Add((ObjetSonore) objetSonore);
-            this.nbHarmoniques = this.objetSonores.Count;
+            this.OscilloSixManagers.Add((OscilloSixManager) OscilloSixManager);
+            this.nbHarmoniques = this.OscilloSixManagers.Count;
 
             //calcul de la fréquence de l'objet
 
 
-            //objetSonore.SetFrequence()
+            //OscilloSixManager.SetFrequence()
             //update de l'objet sonore
-            //objetSonore.EnterSousZone(this);
+            //OscilloSixManager.EnterSousZone(this);
 
             //update du son de la zone
             this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, this.nbHarmoniques);
@@ -102,18 +102,18 @@ public class SousZone : MonoBehaviour
     //un objet sort de la zone
     void OnTriggerExit(Collider other)
     {
-        ObjetSonoreDynamique objetSonore = other.GetComponent<ObjetSonoreDynamique>();
-        if (objetSonore == null)
+        OscilloSixManagerDynamique OscilloSixManager = other.GetComponent<OscilloSixManagerDynamique>();
+        if (OscilloSixManager == null)
         {
             Debug.Log("collision sans objet sonore");
         }
         else
         {
-            objetSonore.ExitSousZone(this);
+            OscilloSixManager.ExitSousZone(this);
 
             //on l'enlève de la liste
-            this.objetSonores.Remove(objetSonore);
-            this.nbHarmoniques = this.objetSonores.Count;
+            this.OscilloSixManagers.Remove(OscilloSixManager);
+            this.nbHarmoniques = this.OscilloSixManagers.Count;
 
             //update du son de la zone
             this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, this.nbHarmoniques);

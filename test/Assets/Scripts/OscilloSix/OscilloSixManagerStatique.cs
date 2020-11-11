@@ -4,12 +4,12 @@ using UnityEngine;
 
 //***********************************************************************
 //BZ
-//Un objetSonoreStatique se trouve toujours dans une sousZone et n'en change jamais
+//Un OscilloSixManagerStatique se trouve toujours dans une sousZone et n'en change jamais
 //sa fréquence est décidée par sa sousZone
 //sa méthode playSound joue son son
 //***********************************************************************
 
-public class ObjetSonoreStatique : ObjetSonore
+public class OscilloSixManagerStatique : OscilloSixManager
 {
     public override void Start()
     {

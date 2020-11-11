@@ -4,17 +4,17 @@ using UnityEngine;
 
 //***********************************************************************
 //BZ & LA
-//Un objetSonore  se trouve dans 1 ou zéro sousZone
+//Un OscilloSixManager  se trouve dans 1 ou zéro sousZone
 //sa fréquence est décidée par sa sousZone
 //sa méthode playSound joue son son
 //***********************************************************************
 
 
-public class ObjetSonoreDynamique : ObjetSonore
+public class OscilloSixManagerDynamique : OscilloSixManager
 {
 
 
-    //trigger par la sousZone quand l'objetSonore rentre dedans
+    //trigger par la sousZone quand l'OscilloSixManager rentre dedans
     public void EnterSousZone(SousZone sousZone)
     {
         //change la sousZone
@@ -27,7 +27,7 @@ public class ObjetSonoreDynamique : ObjetSonore
     }
 
 
-    //trigger par la sousZone quand l'objetSonore en sort
+    //trigger par la sousZone quand l'OscilloSixManager en sort
     public void ExitSousZone(SousZone sousZone)
     {
         if (this.sousZone == sousZone)

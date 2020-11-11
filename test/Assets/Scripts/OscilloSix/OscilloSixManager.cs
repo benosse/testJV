@@ -4,12 +4,12 @@ using UnityEngine.Audio;
 
 /********************************************************************************
 BZ
-class ObjetSonore
-Un objetSonore est associé à une zone
+class OscilloSixManager
+Un OscilloSixManager est associé à une zone
 Il a une fréquence et un manager
-Cette classe est abstraite : elle n'est jamais instanciée, mais elle est héritée par ObjetSonoreStatique et ObjetSonoreDynamique
+Cette classe est abstraite : elle n'est jamais instanciée, mais elle est héritée par OscilloSixManagerStatique et OscilloSixManagerDynamique
 *********************************************************************************/
-public abstract class ObjetSonore : MonoBehaviour
+public abstract class OscilloSixManager : MonoBehaviour
 {
     [SerializeField] protected float frequence;
     protected SousZone sousZone;
@@ -59,19 +59,19 @@ public abstract class ObjetSonore : MonoBehaviour
 
     public void SetNbHarmoniques(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, valeur*2);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, valeur * 2);
     }
 
     public void SetFrequence(float frequence)
     {
         //enregistrement de la fréquence - utile ?
         this.frequence = frequence;
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence );
     }
 
     public void SetMidFreq(float valeur)
     {
-        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Midfreq, 5 - valeur*2);
+        this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Midfreq, valeur);
     }
 }
 
