@@ -7,8 +7,11 @@ créer un .gitignore dans le dossier "test" (pas à la racine) et le remplir ave
 
 # les commandes git:
 
+## git fetch origin nom_de_la_branche
+*récupère une branche du dépot distant
+
 ## git pull 
-*récupère la dernière version sur le dépot distant*
+*récupère la dernière version sur le dépot distant et essaie de la merge avec votre branche courante
 
 ## git add monFichier / git add *
 *ajoute les fichiers à la liste de fichiers à sauver dans le prochain commit*
