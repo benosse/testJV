@@ -28,6 +28,7 @@ public class SousZone : MonoBehaviour
     private List<ObjetSonoreStatique> objetSonoresStatiques;
 
     private void Awake() {
+
         this.oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
         this.zone = this.transform.parent.GetComponent<Zone>();
         this.objetSonores = new List<ObjetSonore>();
@@ -41,11 +42,8 @@ public class SousZone : MonoBehaviour
 
     //Récupération de la zone parent et calcul de la fréquence
     void Start()
-    {
-        
-        
-        this.nbHarmoniques = 0;
-        
+    {  
+        this.nbHarmoniques = 0;  
         this.SetFrequence();   
     }
 
@@ -56,9 +54,7 @@ public class SousZone : MonoBehaviour
         Debug.Log(this.frequence);
         foreach(ObjetSonoreStatique obj in objetSonoresStatiques){
             obj.SetFrequence(this.frequence);
-
-        }
-        
+        }        
     }
 
 
