@@ -49,8 +49,6 @@ public abstract class OscilloSixManager : MonoBehaviour
     }
 
 
-
-
     //Setters
     public void setGain(float valeur)
     {
