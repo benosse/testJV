@@ -125,7 +125,6 @@ public class Metronome : MonoBehaviour
                 foreach (EnregistrementStaticNoire obj in this.enregistrementsStaticNoire)
                 {
                     obj.ChangementDeStaticNoire(this.staticNoire);
-                    Debug.Log("metro " + this.staticNoire);
                 }
                 break;
 
