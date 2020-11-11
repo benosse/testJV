@@ -50,9 +50,9 @@ public class DeplacementLapin : MonoBehaviour
     void Update()
     {
         //fuit le joueur
-        this.direction = (this.rb.transform.position - this.player.transform.position).normalized;
+        /* this.direction = (this.rb.transform.position - this.player.transform.position).normalized;
         this.direction *= Random.Range(1,1.2f);
-        rb.AddForce(this.direction * this.speed, ForceMode.Force);
+        rb.AddForce(this.direction * this.speed, ForceMode.Force);*/
         
         //rb.transform.localScale = new Vector3(1+this.scaleVal, 1+this.scaleVal, 1+this.scaleVal);
     }
@@ -66,11 +66,7 @@ public class DeplacementLapin : MonoBehaviour
         rb.transform.localScale = new Vector3(1+scaledValue, 1+scaledValue, 1+scaledValue);
         this.scaleVal = valeur ;*/
 
-<<<<<<< HEAD
-        rb.transform.localScale = new Vector3(2f+valeur/2, 2f+valeur/2, 2f+valeur/2);
-=======
            // rb.transform.localScale = new Vector3(1+valeur, 1+valeur, 1+valeur);
->>>>>>> XRrig
 
     }
 

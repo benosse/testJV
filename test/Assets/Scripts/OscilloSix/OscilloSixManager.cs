@@ -22,6 +22,8 @@ public abstract class OscilloSixManager : MonoBehaviour
 
     public Enveloppe enveloppeMidFreq;
 
+    
+
     private void Awake() {
         oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
     }

@@ -19,8 +19,8 @@ public class OscilloSixManagerStatique : OscilloSixManager
 
         //récupération de la sousZone et de la fréquence
         this.sousZone = gameObject.transform.parent.gameObject.GetComponent<SousZone>();
-        //this.SetFrequence(this.sousZone.GetFrequence());
-        Debug.Log("freqZone: " + this.sousZone.GetFrequence());
+        this.SetFrequence(this.sousZone.GetFrequence());
+        //Debug.Log("freqZone: " + this.sousZone.GetFrequence());
 
     }
 }
