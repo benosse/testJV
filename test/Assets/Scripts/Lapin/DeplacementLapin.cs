@@ -59,7 +59,7 @@ public class DeplacementLapin : MonoBehaviour
     public void Animation(float valeur)
     {
 
-            rb.transform.localScale = new Vector3(1+valeur, 1+valeur, 1+valeur);
+           // rb.transform.localScale = new Vector3(1+valeur, 1+valeur, 1+valeur);
 
     }
 
