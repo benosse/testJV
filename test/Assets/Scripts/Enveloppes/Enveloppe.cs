@@ -20,6 +20,7 @@ public class Enveloppe : MonoBehaviour
     //la liste de fonctions déléguées
     protected List<Del> enregistrementsBruts;
     protected List<Del> enregistrementsDoux;
+    protected List<Del> enregistrementsTrigger;
     //TODO pour chgmt phases
 
     [SerializeField] protected float valeurBrute;
@@ -30,6 +31,7 @@ public class Enveloppe : MonoBehaviour
     public void Awake() {
        enregistrementsBruts = new List<Del>();
        enregistrementsDoux = new List<Del>();
+       enregistrementsTrigger = new List<Del>();
     }
 
     public virtual void Start() {
@@ -55,13 +57,18 @@ public class Enveloppe : MonoBehaviour
     {
         this.enregistrementsDoux.Add(fonction);
     }
+
+    public void EnregistrerTrigger(Del fonction)
+    {
+        this.enregistrementsTrigger.Add(fonction);
+    }
     
     //Cette fonction est un callBack : elle est appelée automatiquement à chaque fois que l'audiolib envoie une nouvelle valeur 'mes'
     private void UpdateEnveloppe(Hv_adsr_AudioLib.FloatMessage mes) 
     {
-
         switch (mes.receiverName)
         {
+            
             case "envAdsr":
             //enrgistre la nouvelle valeur
             this.valeurBrute = mes.value;
@@ -82,6 +89,13 @@ public class Enveloppe : MonoBehaviour
             foreach (Del fonction in enregistrementsDoux)
             {
                 fonction(this.valeurDouce);
+            }
+            break;
+
+            case "phaseAdsr":
+            foreach (Del fonction in enregistrementsTrigger)
+            {
+                fonction(mes.value);
             }
             break;
 

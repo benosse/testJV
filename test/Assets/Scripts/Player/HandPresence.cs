@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class HandPresence : MonoBehaviour
 {
     // Start is called before the first frame update
+    
     void Start()
     {
         List<InputDevice> devices = new List<InputDevice>();

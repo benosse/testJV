@@ -7,54 +7,26 @@ using UnityEngine;
 //cette classe implémente l'interface EnregistrementAuMetronome pour pouvoir régair aux variations du métronome
 public class DeplacementLapin : MonoBehaviour
 {
-    public float speed;
-    public float jumpForce;
-
-    public float acceleration;
-    public float scaleVal;
-
-    //L'enveloppe pur gérer l'animation
-
-    private Vector3 direction;
     private Rigidbody rb;
+    public float force;
 
-
-    //tmp pour le déplacement
-    private GameObject player;
-
-
-
-
-
-    void Start()
-    {
+    private void Awake() {
         this.rb = GetComponent<Rigidbody>();
-
-        this.speed = 4f;
-        this.jumpForce = 1f;
-        this.direction = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
-
-        this.player = GameObject.Find("Player");
-
-    }
-
-    //déplacement du lapin
-    void Update()
-    {
-        //fuit le joueur
-        this.direction = (this.rb.transform.position - this.player.transform.position).normalized;
-        this.direction *= Random.Range(1,1.2f);
-        rb.AddForce(this.direction * this.speed, ForceMode.Force);*/
-        
     }
 
 
-
-
-    public static float map( float value, float leftMin, float leftMax, float rightMin, float rightMax )
+    public void BougerVers(Vector3 destination)
     {
-        return rightMin + ( value - leftMin ) * ( rightMax - rightMin ) / ( leftMax - leftMin );
-        }
+        //calcul direction
+        Vector3 direction = (destination - this.transform.position).normalized;
 
+        //ajout de random
+        direction.x += Random.Range (-0.5f, 0.5f);
+        direction.z += Random.Range (-0.5f, 0.5f);
+
+        direction.y = 1f;
+
+        rb.AddForce(direction * this.force, ForceMode.Impulse);
+    }
 
 }
