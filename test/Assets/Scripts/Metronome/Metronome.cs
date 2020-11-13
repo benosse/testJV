@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO
+/*
+refaire metronome + enveloppe.
+métro : il enregistre des fonctions delegate
+enveloppes : on règles a, d, s, r, et le trigger avec des sliders dans l'inspecteur
+*/
 public class Metronome : MonoBehaviour
 {
 

@@ -51,7 +51,6 @@ public class SousZone : MonoBehaviour
     {
         this.frequence = this.zone.GetFrequenceOfNote(this.note);  
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
-        Debug.Log(this.frequence);
         foreach(OscilloSixManagerStatique obj in OscilloSixManagersStatiques){
             obj.SetFrequence(this.frequence);
         }        
@@ -78,7 +77,7 @@ public class SousZone : MonoBehaviour
 
         if (OscilloSixManager == null)
         {
-            Debug.Log("collision sans objet sonore");
+            //Debug.Log("collision sans objet sonore");
         }
         else
         {
@@ -105,7 +104,7 @@ public class SousZone : MonoBehaviour
         OscilloSixManagerDynamique OscilloSixManager = other.GetComponent<OscilloSixManagerDynamique>();
         if (OscilloSixManager == null)
         {
-            Debug.Log("collision sans objet sonore");
+            //Debug.Log("collision sans objet sonore");
         }
         else
         {

@@ -25,6 +25,7 @@ public class Enveloppe : MonoBehaviour
 
     [SerializeField] protected float valeurBrute;
     [SerializeField] protected float valeurDouce;
+    [SerializeField] protected float valeurTrigger;
 
 
 
@@ -93,6 +94,7 @@ public class Enveloppe : MonoBehaviour
             break;
 
             case "phaseAdsr":
+            this.valeurTrigger = mes.value;
             foreach (Del fonction in enregistrementsTrigger)
             {
                 fonction(mes.value);

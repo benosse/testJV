@@ -1,32 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 
 //cette classe implémente l'interface EnregistrementAuMetronome pour pouvoir régair aux variations du métronome
 public class DeplacementLapin : MonoBehaviour
 {
     private Rigidbody rb;
-    public float force;
+    private NavMeshAgent agent;
 
-    private void Awake() {
+    private void Awake()
+    {
         this.rb = GetComponent<Rigidbody>();
+        this.agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start() {
+
+        this.agent.speed = 5;
     }
 
 
-    public void BougerVers(Vector3 destination)
+
+
+    //met le lapin en mouvement versla destination, il s'arrête dès qu'il rentre dans le rayonMin autour de cette destination
+    public void BougerVers(Vector3 destination, float rayonMin)
     {
         //calcul direction
-        Vector3 direction = (destination - this.transform.position).normalized;
+        Vector3 direction = (this.transform.position-destination);
 
-        //ajout de random
-        direction.x += Random.Range (-0.5f, 0.5f);
-        direction.z += Random.Range (-0.5f, 0.5f);
+        //sqrMagnitude renvoie le carré de la distance, plus optimisé
+        Debug.Log("dst: " + direction.sqrMagnitude + ";;;"+ rayonMin);
+        if (direction.sqrMagnitude <= (rayonMin * rayonMin))
+        {
+            //arrete le déplacement
+            this.Stop();
+        }
+        else
+        {
+            //bouge le lapin
+            this.agent.isStopped = false;
+            this.agent.SetDestination(destination);
+        }
+    }
 
-        direction.y = 1f;
-
-        rb.AddForce(direction * this.force, ForceMode.Impulse);
+    public void Stop() {
+        Debug.Log("STOP");
+        this.agent.isStopped = true;
+        this.rb.velocity = Vector3.zero;
     }
 
 }
