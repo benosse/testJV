@@ -9,7 +9,7 @@ public class Ballon : MonoBehaviour
 {
 
     //L'enveloppe pur gérer l'animation
-    public Enveloppe enveloppeAnimation;
+    public SequenceurMetroEnveloppe enveloppeAnimation;
     //public Env1 enveloppeAnimation;
 
     //tmp pour le déplacement

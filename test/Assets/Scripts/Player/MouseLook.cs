@@ -25,5 +25,6 @@ public class MouseLook : MonoBehaviour
 
         //pan camera (rotate the player)
         playerBody.Rotate(Vector3.up * mouseX);
+
     }
 }

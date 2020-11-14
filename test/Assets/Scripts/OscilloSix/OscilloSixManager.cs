@@ -16,11 +16,11 @@ public abstract class OscilloSixManager : MonoBehaviour
     protected Hv_oscilloSix_AudioLib oscillo;
     
     //Pour chaque paramètre de l'audiolib on associe une enveloppe, et une fonction delegate (= callback)
-    public Enveloppe enveloppeGain;
+    public SequenceurMetroEnveloppe enveloppeGain;
 
-    public Enveloppe enveloppeNbHarmo;
+    public SequenceurMetroEnveloppe enveloppeNbHarmo;
 
-    public Enveloppe enveloppeMidFreq;
+    public SequenceurMetroEnveloppe enveloppeMidFreq;
 
     
 

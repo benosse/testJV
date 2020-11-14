@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Troupeau : MonoBehaviour
 {
-    public Enveloppe enveloppe;
+    public SequenceurMetroEnveloppe enveloppe;
     private Vector3 centre;
     [SerializeField]
     private float rayonMin;
