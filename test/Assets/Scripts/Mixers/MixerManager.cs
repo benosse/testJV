@@ -26,7 +26,7 @@ public class MixerManager : MonoBehaviour, EnregistrementPeriodeNoire
 
         //enregistrement auprès du metronome
         GameObject metronome = GameObject.Find("Metronome");
-        metronome.GetComponent<Metronome>().EnregistrerPeriodeNoire(this);
+        //metronome.GetComponent<Metronome>().EnregistrerPeriodeNoire(this);
     }
 
 

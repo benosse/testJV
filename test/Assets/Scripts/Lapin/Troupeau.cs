@@ -43,14 +43,14 @@ public class Troupeau : MonoBehaviour
         this.enveloppe.EnregistrerDoux(Bouger);
         this.enveloppe.EnregistrerTrigger(TriggerBouger);
 
-        this.rayonMax = 16;
+        this.rayonMax = 32;
         this.rayonMin = 8;
     }
 
     //déplace le troupeau seulement en phase attaque
     void TriggerBouger(float valeur)
     {
-        if (valeur == 4 )
+        if (valeur == 0 )
         {
             this.enMouvement = true;
 
@@ -69,7 +69,7 @@ public class Troupeau : MonoBehaviour
             this.cube.transform.position = this.centre;
         }
 
-        /*
+        
         else if (valeur == 4 && this.enMouvement) {
             this.enMouvement = false;
             foreach (GameObject obj in lapins)
@@ -77,7 +77,7 @@ public class Troupeau : MonoBehaviour
                 obj.GetComponent<DeplacementLapin>().Stop();
             }
         }
-        */
+        
     }
 
 
@@ -91,7 +91,7 @@ public class Troupeau : MonoBehaviour
             //sélectionne les lapins un par un
             int index = (int)Mathf.Floor(valeur * (lapins.Count));
             //check qu'on appelle cette fonction qu'une seule fois par lapin
-            if (index != this.indexPrecedent)
+            if (index != this.indexPrecedent && index >= 0 && index < this.lapins.Count)
             {
                 DeplacementLapin deplacement = lapins[index].GetComponent<DeplacementLapin>();
                 deplacement.BougerVers(this.centre, this.rayonMin);

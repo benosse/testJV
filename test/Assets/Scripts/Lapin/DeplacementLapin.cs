@@ -18,7 +18,7 @@ public class DeplacementLapin : MonoBehaviour
 
     private void Start() {
 
-        this.agent.speed = 5;
+        this.agent.speed = 8;
     }
 
 
@@ -31,7 +31,6 @@ public class DeplacementLapin : MonoBehaviour
         Vector3 direction = (this.transform.position-destination);
 
         //sqrMagnitude renvoie le carré de la distance, plus optimisé
-        Debug.Log("dst: " + direction.sqrMagnitude + ";;;"+ rayonMin);
         if (direction.sqrMagnitude <= (rayonMin * rayonMin))
         {
             //arrete le déplacement

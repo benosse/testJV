@@ -13,8 +13,8 @@ public class Env1 : Enveloppe, EnregistrementStaticNoire, EnregistrementPeriodeN
         base.Start();
 
     
-        this.metronome.EnregistrerStaticNoire((EnregistrementStaticNoire)this);
-        this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
+        //this.metronome.EnregistrerStaticNoire((EnregistrementStaticNoire)this);
+        //this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
     }
 
 

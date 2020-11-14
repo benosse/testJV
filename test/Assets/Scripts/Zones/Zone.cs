@@ -42,7 +42,6 @@ public class Zone : MonoBehaviour
 
     public float GetFrequenceOfNote(string note)
     {
-        Debug.Log("fréquence de la sous zone: " + this.frequences.GetFrequence(this.accord, note));
         return this.frequences.GetFrequence(this.accord, note);
 
     }

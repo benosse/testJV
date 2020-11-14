@@ -11,8 +11,8 @@ public class Env0: Enveloppe, EnregistrementStaticMesure, EnregistrementPeriodeN
 
         base.Start();
 
-        this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
-        this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
+        //this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
+        //this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
 
 
         this.enveloppe.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Moderesetadsr, 0f);

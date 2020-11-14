@@ -12,9 +12,9 @@ public class Env2 : Enveloppe, EnregistrementStaticCroche,EnregistrementStaticMe
         // appel de la méthode Start de la classe parent
         base.Start();
 
-        this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
-        this.metronome.EnregistrerStaticCroche((EnregistrementStaticCroche)this);
-        this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
+        //this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
+        //this.metronome.EnregistrerStaticCroche((EnregistrementStaticCroche)this);
+        //this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
     }
 
 

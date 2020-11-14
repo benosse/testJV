@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class EnveloppeTroupeau : Enveloppe, EnregistrementStaticMesure, EnregistrementPeriodeNoire 
+public class EnveloppeTroupeau : Enveloppe
 {
     
     public override void Start()
@@ -13,8 +13,8 @@ public class EnveloppeTroupeau : Enveloppe, EnregistrementStaticMesure, Enregist
         base.Start();
 
     
-        this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
-        this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
+        //this.metronome.EnregistrerStaticMesure((EnregistrementStaticMesure)this);
+        //this.metronome.EnregistrerPeriodeNoire((EnregistrementPeriodeNoire)this);
     }
 
 
