@@ -69,23 +69,11 @@ public class Enveloppe : MonoBehaviour
         //recalcule la durée totale
         this.dureeTotale = this.dureeAttack + this.dureeDecay + this.dureeSustain + this.dureeRelease;
 
-        //recalcul des durées de l'enveloppe
-        if (this.enveloppe)
-        {
-            this.setEnveloppe();
-        }
-
-        //réenregistrement
-        if (this.metronome)
-        {
-            this.enregistrerAuMetronome();
-        }
-
         //recalcule de la période
         switch (this.periode)
         {
             case choixPeriode.noire:
-                this.periodeFloat = .0f;
+                this.periodeFloat = 1f;
                 break;
             case choixPeriode.blanche:
                 this.periodeFloat = 2f;
@@ -105,6 +93,18 @@ public class Enveloppe : MonoBehaviour
             default:
                 Debug.Log("periode inconnue");
                 break;
+        }
+
+        //recalcul des durées de l'enveloppe
+        if (this.enveloppe)
+        {
+            this.setEnveloppe();
+        }
+
+        //réenregistrement
+        if (this.metronome)
+        {
+            this.enregistrerAuMetronome();
         }
     }
 
@@ -137,7 +137,6 @@ public class Enveloppe : MonoBehaviour
     //quand cette valeur change l'enveloppe recalcule la durée de sustain, decay, attack, release
     public void ChangementDeBPM(float periodeNoire)
     {
-        Debug.Log("enveloppe changement bpm");
         //enregistrement de la valeur
         this.periodeNoire = periodeNoire;
         //recalcul des durées de l'enveloppe

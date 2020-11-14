@@ -45,7 +45,7 @@ public class DeplacementLapin : MonoBehaviour
     }
 
     public void Stop() {
-        Debug.Log("STOP");
+        
         this.agent.isStopped = true;
         this.rb.velocity = Vector3.zero;
         this.rb.angularVelocity = Vector3.zero;
