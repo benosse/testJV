@@ -167,9 +167,6 @@ public class Enveloppe : MonoBehaviour
     //lance l'ADSR
     public void TriggerADSR(int valeur)
     {
-        Debug.Log("valeur:"+valeur + "m:"+this.modulo);
-        Debug.Log("modulo "+valeur % this.modulo );
-
         if (valeur % this.modulo == 0)
         {   
             this.enveloppe.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Triggeradsr, 1f);

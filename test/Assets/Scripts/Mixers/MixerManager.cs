@@ -11,7 +11,7 @@ BZ
 //le manager implémente EnregistrementPeriodeNoire pour pouvoir s'enregistrer auprès du metronome
 *******************************************************************************************************/
 
-public class MixerManager : MonoBehaviour, EnregistrementPeriodeNoire
+public class MixerManager : MonoBehaviour
 {
     //tous les groupes du mixer
     private AudioMixerGroup[] groups;
