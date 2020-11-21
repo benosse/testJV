@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//utilitaires de tri
+using System.Linq;
 
 public class Troupeau : MonoBehaviour
 {
@@ -43,14 +45,14 @@ public class Troupeau : MonoBehaviour
         this.enveloppe.EnregistrerDoux(Bouger);
         this.enveloppe.EnregistrerTrigger(TriggerBouger);
 
-        this.rayonMax = 32;
+        this.rayonMax = 40;
         this.rayonMin = 8;
     }
 
     //déplace le troupeau seulement en phase attaque
     void TriggerBouger(float valeur)
     {
-        if (valeur == 0 )
+        if (valeur == 0)
         {
             this.enMouvement = true;
 
@@ -64,20 +66,29 @@ public class Troupeau : MonoBehaviour
             this.centre.y = 0;
 
             //bouge le centre aléatoirement
-            this.centre = this.centre + (Random.onUnitSphere * this.rayonMax);
+            //todo : vérfier que le nouveau centre est sur la map
+            Vector2 random = Random.insideUnitCircle.normalized;
+            this.centre = this.centre + new Vector3(random.x, 0, random.y) * this.rayonMax;
             this.centre.y = 0;
             this.cube.transform.position = this.centre;
+
+            //trie la liste des lapins en fonction du nouveau centre
+            this.lapins = this.lapins.OrderBy(
+                x => Vector3.Distance(this.centre, x.transform.position)
+            ).ToList();
+            
         }
 
-        
-        else if (valeur == 4 && this.enMouvement) {
+
+        else if (valeur == 4 && this.enMouvement)
+        {
             this.enMouvement = false;
             foreach (GameObject obj in lapins)
             {
                 obj.GetComponent<DeplacementLapin>().Stop();
             }
         }
-        
+
     }
 
 

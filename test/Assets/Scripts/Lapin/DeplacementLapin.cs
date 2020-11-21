@@ -9,16 +9,33 @@ public class DeplacementLapin : MonoBehaviour
 {
     private Rigidbody rb;
     private NavMeshAgent agent;
+    public SequenceurMetroEnveloppe enveloppeBlendShape;
+    private SkinnedMeshRenderer skinnedMeshRenderer;
+
+    //animation
+    private Animator anim;
+    private int vitesseHash = Animator.StringToHash("Vitesse");
 
     private void Awake()
     {
         this.rb = GetComponent<Rigidbody>();
         this.agent = GetComponent<NavMeshAgent>();
+        this.skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
     }
 
     private void Start() {
 
-        this.agent.speed = 8;
+        this.anim = GetComponent<Animator>();
+
+        this.agent.speed = 16;
+
+        //enregistrer à l'enveloppe
+        this.enveloppeBlendShape.EnregistrerDoux(Animer);
+    }
+
+    private void Update() {
+        //update animator
+        this.anim.SetFloat(vitesseHash, this.agent.velocity.magnitude);
     }
 
 
@@ -35,6 +52,9 @@ public class DeplacementLapin : MonoBehaviour
         {
             //arrete le déplacement
             this.Stop();
+            
+
+
         }
         else
         {
@@ -42,6 +62,15 @@ public class DeplacementLapin : MonoBehaviour
             this.agent.isStopped = false;
             this.agent.SetDestination(destination);
         }
+    }
+
+    public void Animer(float valeur)
+    {
+        if (true)
+        {
+            for (int i = 0; i<9; i++)
+                skinnedMeshRenderer.SetBlendShapeWeight (i, valeur *100);
+        }         
     }
 
     public void Stop() {

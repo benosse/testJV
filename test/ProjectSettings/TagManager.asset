@@ -6,6 +6,7 @@ TagManager:
   tags:
   - OscilloSixManager
   - SousZone
+  - NavMeshInsect
   layers:
   - Default
   - TransparentFX
