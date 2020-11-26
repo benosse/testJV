@@ -249,7 +249,6 @@ public class Metronome : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("aucun désenregistrement possible à  " + nom + "au métronome");
                 break;
         }
     }
