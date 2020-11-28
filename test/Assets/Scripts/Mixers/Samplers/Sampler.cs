@@ -10,7 +10,8 @@ script qui gère les sampleurs, des mixers particuliers qui permettent d'enregis
 public class Sampler : MonoBehaviour
 {
     [SerializeField]
-    private AudioMixerGroup samplerMixer;
+    private AudioMixer samplerMixer;
+    private AudioMixerGroup master;
 
     public string nom;
 
@@ -21,32 +22,36 @@ public class Sampler : MonoBehaviour
     private void Awake()
     {
         //récupération du mixer
-        AudioMixer mixer = Resources.Load<AudioMixer>("Jeu");
-        AudioMixerGroup[] groups = mixer.FindMatchingGroups(this.nom);
-
-        if (groups.Length > 0)
+        this.samplerMixer = Resources.Load<AudioMixer>(this.nom);
+        if (!this.samplerMixer)
         {
-            this.samplerMixer = groups[0];
+            Debug.Log("mixer "+ this.nom + " non trouvé");
         }
         else
         {
-            Debug.Log("groupe " + this.nom + " non trouvé");
+            //récupération de l'audiogroup master du mixer
+            this.master = this.samplerMixer.FindMatchingGroups("Master")[0];
         }
     }
 
-    //simulation d'un enregistrement
-    private void Update()
+    //enregistre la source en parametre
+    public void Enregistrer(GestionnaireMixer source)
     {
-        if (Input.GetKeyDown("space") && this.samplerMixer)
-        {
-            //récupération de la source
-            this.source =
-                GameObject
-                    .FindGameObjectsWithTag("ASampler")[0]
-                    .GetComponent<GestionnaireMixer>();
+        this.source = source;
+        this.source.SetMixer(this.master);
 
-            //lancement de l'enregistrement
-            this.source.SetMixer(this.samplerMixer);
+        this.samplerMixer.SetFloat("record", 1f);
+    }
+
+    public void ArreterEnregistrement()
+    {
+        if (this.source)
+        {
+            this.source.resetMixerParDefaut();
+            this.source = null;
+
+            this.samplerMixer.SetFloat("record", 0f);
         }
     }
+
 }

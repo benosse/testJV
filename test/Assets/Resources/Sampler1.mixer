@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sampler1
+  m_OutputGroup: {fileID: -190369955229525703, guid: 11557c2da84fc6840b0ceed9ee2592c2,
+    type: 2}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters:
+  - guid: bb0e1d92067162541a48020ac17a603b
+    name: record
+  m_AudioMixerGroupViews:
+  - guids:
+    - 5be90013d5da5c84da9d535bb9fba60e
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Master
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 5be90013d5da5c84da9d535bb9fba60e
+  m_Children: []
+  m_Volume: f532908b5cd16f348a32f8df20f8d195
+  m_Pitch: 4a763bb5047fc654f8f70ae9438ad0a8
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400004}
+  - {fileID: 8412359484203735453}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: f26abc6e84135bd43956e6bdebf59f3d
+  m_EffectName: Attenuation
+  m_MixLevel: 0cfcd3f86cafd654b8138082d3d037c9
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Snapshot
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: a9140f277dc148d408f9b10f9545aea0
+  m_FloatValues: {}
+  m_TransitionOverrides: {}
+--- !u!244 &8412359484203735453
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 89f4f9445ea4d344891d569fcb443417
+  m_EffectName: gralunar
+  m_MixLevel: a024a0e825c0de24a935fb3ad4191dee
+  m_Parameters:
+  - m_ParameterName: grainDur
+    m_GUID: f6d2d824b128c434996fd60fe2a95f52
+  - m_ParameterName: grainPitch
+    m_GUID: 8ae4a4b633d392342b784b9670922045
+  - m_ParameterName: grainStart
+    m_GUID: b95782d9354f35640906e7bc68ad641f
+  - m_ParameterName: inGainGrains
+    m_GUID: 3d4d57383895f8d4eb7fb182d7d9895c
+  - m_ParameterName: inputGrains
+    m_GUID: fb771944038b7154580542e3bfd1563b
+  - m_ParameterName: nbGrains
+    m_GUID: e4565353beb01404fbb37110c988ea39
+  - m_ParameterName: outGainGrains
+    m_GUID: a4d96740792480f4eb23ddd72234249b
+  - m_ParameterName: overLap
+    m_GUID: 3af7928b0dc4dcf4f9e4e98c4d352aea
+  - m_ParameterName: playGrains
+    m_GUID: 53699b10138814d41ab1050050e2cf4d
+  - m_ParameterName: randomOctave
+    m_GUID: 7c42eca8e721aab4eb6c148cbf1c3651
+  - m_ParameterName: randomStart
+    m_GUID: 685c1055a82abc141bf8289a88b13866
+  - m_ParameterName: record
+    m_GUID: bb0e1d92067162541a48020ac17a603b
+  - m_ParameterName: selectOutDry
+    m_GUID: 0f9977bae5e56c34ab0b5537375bce99
+  - m_ParameterName: selectOutGrains
+    m_GUID: b0f1b1c30b23f5947915d63895a5451b
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

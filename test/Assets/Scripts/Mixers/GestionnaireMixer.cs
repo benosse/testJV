@@ -6,18 +6,19 @@ using UnityEngine.Audio;
 /*
 BZ
 script qui gère le mixer de sortie d'une audiosource
-gère aussi la possibilité d'être sampler ( = passer à un mixer sampler)
 */
 public class GestionnaireMixer : MonoBehaviour
 {
     private AudioSource source;
     //le mixer par défaut
-    private AudioMixerGroup master;
+    private AudioMixerGroup mixerParDefaut;
+    //le mixer actuel (si il se fait enregistrer par exemple)
+    private AudioMixerGroup mixerActuel;
 
 
     private void Start()
     {
-            //récupère l'audiosource
+        //récupère l'audiosource
         this.source = gameObject.GetComponent<AudioSource>();
         if (!this.source)
         {
@@ -25,18 +26,29 @@ public class GestionnaireMixer : MonoBehaviour
             return;
         }
 
-        //récupère le mixer master
+        //récupère le mixer mixerParDefaut
         AudioMixer mixer = Resources.Load<AudioMixer>("Jeu");
         AudioMixerGroup[] groups = mixer.FindMatchingGroups("Master");
-        this.master = groups[0];
+        this.mixerParDefaut = groups[0];
 
-        //par défaut on s'enregistre au mixer master
-        this.source.outputAudioMixerGroup = this.master;
+        //par défaut on s'enregistre au mixerParDefaut
+        this.source.outputAudioMixerGroup = this.mixerParDefaut;
+        this.mixerActuel = this.mixerParDefaut;
     }
 
 
+    //méthode qui permet de changer le mixer de l'objet
+    //à appeler par un micro par exemple
     public void SetMixer(AudioMixerGroup mixer)
     {
+        this.mixerActuel = mixer;
         this.source.outputAudioMixerGroup = mixer;
+    }
+
+    //remet le mixer de l'objet à son mixer par défaut
+    public void resetMixerParDefaut()
+    {
+        this.mixerActuel = this.mixerParDefaut;
+        this.source.outputAudioMixerGroup = this.mixerParDefaut;
     }
 }
