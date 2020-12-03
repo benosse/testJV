@@ -22,7 +22,6 @@ public class EnregistrableParMicro : MonoBehaviour
     private Color couleurPreSelection = Color.yellow;
     private Color couleurEnregistrement = Color.green;
 
-    private bool preSelectionEnCours = false;
     private bool enregistrementEnCours = false;
 
 
@@ -36,7 +35,7 @@ public class EnregistrableParMicro : MonoBehaviour
         this.contour = gameObject.AddComponent<Outline>();
         this.contour.enabled = false;
         this.contour.OutlineWidth = 5f;
-        this.contour.OutlineColor = Color.blue;
+
     }
 
 
@@ -54,13 +53,18 @@ public class EnregistrableParMicro : MonoBehaviour
     public void PreSelectionner()
     {
         this.contour.enabled = true;    
-        Debug.Log("eeeee" + this.contour.OutlineColor);
+        if (!this.enregistrementEnCours)
+        {
+            this.contour.OutlineColor = this.couleurPreSelection;
+        }
+        else {
+            this.contour.OutlineColor = this.couleurEnregistrement;
+        }
     }
 
     public void SortiePreSelection()
     {
         this.contour.enabled = false;
-
     }
 
 
@@ -79,13 +83,10 @@ public class EnregistrableParMicro : MonoBehaviour
         this.gestionnaireMixer.SetMixer(mixer);
     }
 
+
     public void SortieEnregistrement()
     {
         this.enregistrementEnCours = false;
-
-        this.contour.OutlineColor = this.couleurPreSelection;
-        //this.contour.enabled = false;
-   
 
         //mixer
         this.gestionnaireMixer.resetMixerParDefaut();

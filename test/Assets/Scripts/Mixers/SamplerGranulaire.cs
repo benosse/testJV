@@ -119,7 +119,7 @@ public class SamplerGranulaire : MonoBehaviour
         if (Physics.Raycast(ray, out hit, this.distanceMax))
         {
             EnregistrableParMicro cible = hit.transform.gameObject.GetComponent<EnregistrableParMicro>();
-            if (cible && cible != this.cibleActuelle)
+            if (cible && cible != this.nouvelleCible)
             {
                 if (this.nouvelleCible){
                     this.nouvelleCible.SortiePreSelection();
