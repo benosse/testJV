@@ -19,7 +19,7 @@ public class Micro : MonoBehaviour
 
     private bool enregistrementEnCours = false;
     private float dureeEnregistrement = 0f;
-    private float dureeEnregistrementMax = 2;
+    private float dureeEnregistrementMax = 8;
 
 
 
