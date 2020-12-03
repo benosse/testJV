@@ -13,7 +13,7 @@ public class GestionnaireMixer : MonoBehaviour
     //le mixer par défaut
     private AudioMixerGroup mixerParDefaut;
     //le mixer actuel (si il se fait enregistrer par exemple)
-    private AudioMixerGroup mixerActuel;
+    [SerializeField] private AudioMixerGroup mixerActuel;
 
 
     private void Start()
@@ -28,7 +28,7 @@ public class GestionnaireMixer : MonoBehaviour
 
         //récupère le mixer mixerParDefaut
         AudioMixer mixer = Resources.Load<AudioMixer>("Jeu");
-        AudioMixerGroup[] groups = mixer.FindMatchingGroups("Master");
+        AudioMixerGroup[] groups = mixer.FindMatchingGroups("SonsDuJeu");
         this.mixerParDefaut = groups[0];
 
         //par défaut on s'enregistre au mixerParDefaut
