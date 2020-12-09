@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 /*
 BZ
 script qui gère le mixer de sortie d'une audiosource
+09/12/20 : TODO finalement il est pas très utilisé ce script, sûrement à enlever dans le futur
 */
 public class GestionnaireMixer : MonoBehaviour
 {

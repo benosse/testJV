@@ -8,10 +8,8 @@ using UnityEngine.Audio;
 BZ
 composant à mettre à un objet pour qu'il soit enregistrable par un micro
 Ce script gère deux choses:
-- les mixers de son gameobject (mixer par défaut, changement de mixer...)
 -la réactivité par rapport au micro (ajoute un contour quand sélectionné par un micro...)
-
-le script dialogue avec le script "GestionnaireMixer" de l'objet
+-la copie de l'audiolib lors de l'enregistrement
 */
 
 
@@ -28,6 +26,9 @@ public class EnregistrableParMicro : MonoBehaviour
     //gestion des mixers
     private GestionnaireMixer gestionnaireMixer;
 
+    //gestion de l'audioLib à copier
+    private IGestionnaireAudioLib audioLib;
+
 
 
     private void Awake() {
@@ -42,7 +43,7 @@ public class EnregistrableParMicro : MonoBehaviour
     private void Start()
     {   
         this.gestionnaireMixer = gameObject.GetComponent<GestionnaireMixer>();
-        
+        this.audioLib = gameObject.GetComponent<IGestionnaireAudioLib>();
     }
 
 
@@ -72,23 +73,31 @@ public class EnregistrableParMicro : MonoBehaviour
     //*****************************************************************************************************
     //ENREGISTREMENT 
     //*****************************************************************************************************
-    public void Enregistrer(AudioMixerGroup mixer)
+    public void Enregistrer(GameObject enregistreur)
     {
         this.enregistrementEnCours = true;
 
+        //change apparence de l'objet enregistré
         this.contour.enabled = true;
         this.contour.OutlineColor = this.couleurEnregistrement;
 
-        //mixer
-        this.gestionnaireMixer.SetMixer(mixer);
+        //copie l'audiolib dans le micro
+        this.audioLib.Cloner(enregistreur);
     }
 
 
-    public void SortieEnregistrement()
+    public void SortieEnregistrement(GameObject enregistreur)
     {
         this.enregistrementEnCours = false;
 
-        //mixer
-        this.gestionnaireMixer.resetMixerParDefaut();
+        //supprime l'audiolib dans le micro
+        this.audioLib.Supprimer(enregistreur);
+
+    }
+
+
+    public AudioSource GetAudioSource()
+    {
+        return gameObject.GetComponent<AudioSource>();
     }
 }

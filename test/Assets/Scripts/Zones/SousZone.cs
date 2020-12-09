@@ -25,28 +25,24 @@ public class SousZone : MonoBehaviour
     [SerializeField] private float frequence;
     [SerializeField] protected int nbHarmoniques;
 
-    //les objets sonores dans la zone
-    private List<GestionnaireOscilloSix> GestionnaireOscilloSixs;
-    private List<GestionnaireOscilloSixStatique> GestionnaireOscilloSixsStatiques;
+    //les objets  dans la zone
+    private List<FrequenceParZone> enfants;
 
-    //les objets qui implémnentent l'interface ITransmetFrequence dans la zone
-    private List<ITransmetFrequence> transmetFrequences;
+
+
 
     private void Awake() {
 
         this.oscillo = gameObject.GetComponent<Hv_oscilloSix_AudioLib>();
         this.zone = this.transform.parent.GetComponent<Zone>();
-        this.GestionnaireOscilloSixs = new List<GestionnaireOscilloSix>();
-        this.GestionnaireOscilloSixsStatiques = new List<GestionnaireOscilloSixStatique>();
+
+        this.enfants = new List<FrequenceParZone>();
 
         foreach (Transform child in transform) { 
-            GestionnaireOscilloSixsStatiques.Add(child.gameObject.GetComponent<GestionnaireOscilloSixStatique>());
+            enfants.Add(child.gameObject.GetComponent<FrequenceParZone>());
         }
 
-        //todo récupérer les enfants du type transmetfrequences
-        this.transmetFrequences = new List<ITransmetFrequence>();
-
-}
+    }
 
 
     //Récupération de la zone parent et calcul de la fréquence
@@ -59,8 +55,10 @@ public class SousZone : MonoBehaviour
     public void SetFrequence()
     {
         this.frequence = this.zone.GetFrequenceOfNote(this.note);  
+
         this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Freqmaster, frequence);
-        foreach(GestionnaireOscilloSixStatique obj in GestionnaireOscilloSixsStatiques){
+
+        foreach(FrequenceParZone obj in enfants){
             obj.SetFrequence(this.frequence);
         }        
     }
@@ -79,28 +77,22 @@ public class SousZone : MonoBehaviour
     //un objet rentre dans la sousZone
     //si c'est un objet sonore on change sa fréquence
     //TODO peut être?: inverser les trigger si possible (les mettre sur les objets qui rentrent dans la zone)
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider entrant)
     {
+        FrequenceParZone frequenceParZone = entrant.GetComponent<FrequenceParZone>();
 
-        GestionnaireOscilloSixDynamique oscilloEntrant = other.GetComponent<GestionnaireOscilloSixDynamique>();
-
-        if (oscilloEntrant == null)
+        if (frequenceParZone == null)
         {
             //Debug.Log("collision sans objet sonore");
         }
         else
         {
             //ajout à la liste
-            this.GestionnaireOscilloSixs.Add((GestionnaireOscilloSix) oscilloEntrant);
-            this.nbHarmoniques = this.GestionnaireOscilloSixs.Count;
-
-            //calcul de la fréquence de l'objet
+            this.enfants.Add((FrequenceParZone) frequenceParZone);
+            this.nbHarmoniques = this.enfants.Count;
 
 
-            //GestionnaireOscilloSix.SetFrequence()
-            //update de l'objet sonore
-            oscilloEntrant.EnterSousZone(this);
-
+            frequenceParZone.EnterSousZone(this);
             //update du son de la zone
             this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, this.nbHarmoniques);
         }
@@ -108,20 +100,20 @@ public class SousZone : MonoBehaviour
     }
 
     //un objet sort de la zone
-    void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider entrant)
     {
-        GestionnaireOscilloSixDynamique oscilloEntrant = other.GetComponent<GestionnaireOscilloSixDynamique>();
-        if (oscilloEntrant == null)
+        FrequenceParZone frequenceParZone = entrant.GetComponent<FrequenceParZone>();
+        if (frequenceParZone == null)
         {
             //Debug.Log("collision sans objet sonore");
         }
         else
         {
-            oscilloEntrant.ExitSousZone(this);
+            frequenceParZone.ExitSousZone(this);
 
             //on l'enlève de la liste
-            this.GestionnaireOscilloSixs.Remove(oscilloEntrant);
-            this.nbHarmoniques = this.GestionnaireOscilloSixs.Count;
+            this.enfants.Remove(frequenceParZone);
+            this.nbHarmoniques = this.enfants.Count;
 
             //update du son de la zone
             this.oscillo.SetFloatParameter(Hv_oscilloSix_AudioLib.Parameter.Nbharmo, this.nbHarmoniques);

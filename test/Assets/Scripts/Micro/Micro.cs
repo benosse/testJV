@@ -1,14 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 
-
-
-public class SamplerGranulaire : MonoBehaviour
+public class Micro : MonoBehaviour
 {
-    /*
     //l'objet actuellement ciblé par le sampler
     
     [SerializeField] private EnregistrableParMicro cibleActuelle;
@@ -24,10 +21,17 @@ public class SamplerGranulaire : MonoBehaviour
 
     private bool lectureEnCours = false;
 
-    //le mixer du sampler et ses groupes
-    private AudioMixer samplerMixer;
-    private AudioMixerGroup dry;
-    private AudioMixerGroup wet;
+    //l'audiosource du micro
+    private AudioSource audioSource;
+
+    //le mixer du micro et son groupe
+    private AudioMixer mixer;
+    private AudioMixerGroup master;
+
+    //les snapshots du mixer
+    private AudioMixerSnapshot on;
+    private AudioMixerSnapshot off;
+    private float transition = 0.5f;
 
     public string nom;
 
@@ -35,11 +39,13 @@ public class SamplerGranulaire : MonoBehaviour
 
     private void Awake()
     {
-        //récupération du mixer
-        this.samplerMixer = Resources.Load<AudioMixer>(this.nom);
-        this.dry = this.samplerMixer.FindMatchingGroups("Dry")[0];
-        this.wet = this.samplerMixer.FindMatchingGroups("Wet")[0];
+        //récupération du mixer et audiosource
+        this.mixer = Resources.Load<AudioMixer>(this.nom);
+        this.master = mixer.FindMatchingGroups("Master")[0];
+        this.on = mixer.FindSnapshot("On");
+        this.off = mixer.FindSnapshot("Off");
 
+        this.audioSource = GetComponent<AudioSource>();
 
         //visualisation du rayon
         this.lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -50,59 +56,83 @@ public class SamplerGranulaire : MonoBehaviour
         this.lineRenderer.endColor = this.couleurEnregistrement;
     }
 
+    private void Start() {
+        this.audioSource.outputAudioMixerGroup = this.master;
+        this.off.TransitionTo(0f);
+    }
+
 
 
     //*****************************************************************************************************
     //EVENEMENTS    
+    //e enregistrer, c desenregistrer, j jouer
     //*****************************************************************************************************
     private void gestionEvenements()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("e"))
         {
-            //libère la cible précédente
-            if (this.cibleActuelle)
-            {
-                this.cibleActuelle.SortieEnregistrement();
-                this.cibleActuelle = null;
-            }
+            this.Enregistrer();
+        }
 
-            //enregistre la nouvelle
-            if (this.nouvelleCible)
+        if (Input.GetKeyDown("c"))
+        {
+            Debug.Log("exit");
+            this.Desenregistrer();
+        }
+
+        if (Input.GetKeyDown("j"))
+        {
+            this.Jouer();
+        }
+    }
+
+    public void Enregistrer()
+    {
+        if (this.nouvelleCible)
+        {
+            if (this.nouvelleCible == this.cibleActuelle)
             {
+                //même cible que précédemment : on ne fait rien
+            }
+            else{
+                //arrête enregistrement de la cible précédente
+                if (this.cibleActuelle)
+                {
+                    this.cibleActuelle.SortieEnregistrement(this.gameObject);
+                }
+                
+                //s'enregistre à la nouvelle cible
                 this.cibleActuelle = this.nouvelleCible;
-                this.cibleActuelle.Enregistrer(this.dry);
-                this.samplerMixer.SetFloat("record", 1f);
+                this.cibleActuelle.Enregistrer(this.gameObject);
             }
         }
+    }
 
-        if (Input.GetKeyDown("p"))
+
+    public void Jouer()
+    {
+        if (this.lectureEnCours)
         {
-            if (this.lectureEnCours)
-            {
-                this.ArreterJouer();
-            }
-            else
-            {
-                this.Jouer();
-            }
+            this.lectureEnCours = false;
+            this.off.TransitionTo(this.transition);
+        }
+        else
+        {
+            this.lectureEnCours = true;
+            this.on.TransitionTo(this.transition);
         }
     }
 
 
-    //*****************************************************************************************************
-    //JOUER LE SON ENREGISTRE
-    //*****************************************************************************************************
-    private void Jouer()
+    public void Desenregistrer()
     {
-        this.lectureEnCours = true;
-        this.samplerMixer.SetFloat("playGrains", 1f);
+        if (this.cibleActuelle)
+        {
+            this.cibleActuelle.SortieEnregistrement(this.gameObject);
+            this.cibleActuelle = null;
+        }
     }
 
-    private void ArreterJouer()
-    {
-        this.lectureEnCours = false;
-        this.samplerMixer.SetFloat("playGrains", 0f);
-    }
 
 
     //*****************************************************************************************************
@@ -139,5 +169,4 @@ public class SamplerGranulaire : MonoBehaviour
             this.nouvelleCible = null;
         }
     }
-    */
 }
