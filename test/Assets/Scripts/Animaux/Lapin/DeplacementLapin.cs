@@ -66,11 +66,13 @@ public class DeplacementLapin : MonoBehaviour
 
     public void Animer(float valeur)
     {
+        /*
         if (true)
         {
             for (int i = 0; i<9; i++)
                 skinnedMeshRenderer.SetBlendShapeWeight (i, valeur *100);
-        }         
+        }        
+        */ 
     }
 
     public void Stop() {

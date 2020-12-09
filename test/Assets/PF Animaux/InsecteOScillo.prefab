@@ -157,18 +157,6 @@ MonoBehaviour:
   nbHarmo: 0
   selectOutput: 2
   smoothGain: 10
---- !u!114 &7102182030222783475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3281423623598892865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22c3c8f96d39e89468183fc0792b06e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &478197543389116138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +173,18 @@ MonoBehaviour:
   enveloppeNbHarmo: {fileID: 0}
   enveloppeMidFreq: {fileID: 0}
   frequence: 0
+--- !u!114 &7102182030222783475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3281423623598892865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c3c8f96d39e89468183fc0792b06e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8964695353814976239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +205,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 157430489265895161, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373975992321950170, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373975992321950170, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373975992321950170, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373975992321950170, guid: 683f515e31902c544b19b96f57eef877,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1574704440209294699, guid: 683f515e31902c544b19b96f57eef877,
         type: 3}
       propertyPath: enveloppe
