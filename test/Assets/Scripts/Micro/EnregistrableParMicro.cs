@@ -23,9 +23,6 @@ public class EnregistrableParMicro : MonoBehaviour
     private bool enregistrementEnCours = false;
 
 
-    //gestion des mixers
-    private GestionnaireMixer gestionnaireMixer;
-
     //gestion de l'audioLib à copier
     private IGestionnaireAudioLib audioLib;
 
@@ -36,13 +33,11 @@ public class EnregistrableParMicro : MonoBehaviour
         this.contour = gameObject.AddComponent<Outline>();
         this.contour.enabled = false;
         this.contour.OutlineWidth = 5f;
-
     }
 
 
     private void Start()
     {   
-        this.gestionnaireMixer = gameObject.GetComponent<GestionnaireMixer>();
         this.audioLib = gameObject.GetComponent<IGestionnaireAudioLib>();
     }
 
@@ -65,7 +60,10 @@ public class EnregistrableParMicro : MonoBehaviour
 
     public void SortiePreSelection()
     {
-        this.contour.enabled = false;
+        if(!this.enregistrementEnCours)
+        {
+            this.contour.enabled = false;
+        }
     }
 
 
@@ -89,6 +87,8 @@ public class EnregistrableParMicro : MonoBehaviour
     public void SortieEnregistrement(GameObject enregistreur)
     {
         this.enregistrementEnCours = false;
+        //change apparence de l'objet enregistré
+        this.contour.enabled = false;
 
         //supprime l'audiolib dans le micro
         this.audioLib.Supprimer(enregistreur);

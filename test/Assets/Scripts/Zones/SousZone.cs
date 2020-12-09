@@ -21,9 +21,9 @@ public class SousZone : MonoBehaviour
     private Zone zone;
 
     //propriétés de l'oscillo
-    protected Hv_oscilloSix_AudioLib oscillo;
+    private Hv_oscilloSix_AudioLib oscillo;
     [SerializeField] private float frequence;
-    [SerializeField] protected int nbHarmoniques;
+    [SerializeField] private int nbHarmoniques;
 
     //les objets  dans la zone
     private List<FrequenceParZone> enfants;

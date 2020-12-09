@@ -6,38 +6,38 @@ using UnityEngine.Audio;
 
 public class Micro : MonoBehaviour
 {
-    //l'objet actuellement ciblé par le sampler
+    //l'objet actuellement ciblé par le micro
     
-    [SerializeField] private EnregistrableParMicro cibleActuelle;
-    [SerializeField] private EnregistrableParMicro nouvelleCible;
+    [SerializeField] protected EnregistrableParMicro cibleActuelle;
+    [SerializeField] protected EnregistrableParMicro nouvelleCible;
 
     //la portée du sampler
     public float distanceMax;
 
     //visualisation de la portée du sampler
-    private LineRenderer lineRenderer;
-    private Color couleurPreSelection = Color.yellow;
-    private Color couleurEnregistrement = Color.green;
+    protected LineRenderer lineRenderer;
+    protected Color couleurPreSelection = Color.yellow;
+    protected Color couleurEnregistrement = Color.green;
 
-    private bool lectureEnCours = false;
+    protected bool lectureEnCours = false;
 
     //l'audiosource du micro
-    private AudioSource audioSource;
+    protected AudioSource audioSource;
 
     //le mixer du micro et son groupe
-    private AudioMixer mixer;
-    private AudioMixerGroup master;
+    protected AudioMixer mixer;
+    protected AudioMixerGroup master;
 
     //les snapshots du mixer
-    private AudioMixerSnapshot on;
-    private AudioMixerSnapshot off;
-    private float transition = 0.5f;
+    protected AudioMixerSnapshot on;
+    protected AudioMixerSnapshot off;
+    protected float transition = 0.5f;
 
     public string nom;
 
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         //récupération du mixer et audiosource
         this.mixer = Resources.Load<AudioMixer>(this.nom);
@@ -56,7 +56,7 @@ public class Micro : MonoBehaviour
         this.lineRenderer.endColor = this.couleurEnregistrement;
     }
 
-    private void Start() {
+    protected virtual void Start() {
         this.audioSource.outputAudioMixerGroup = this.master;
         this.off.TransitionTo(0f);
     }
@@ -67,7 +67,7 @@ public class Micro : MonoBehaviour
     //EVENEMENTS    
     //e enregistrer, c desenregistrer, j jouer
     //*****************************************************************************************************
-    private void gestionEvenements()
+    protected virtual void GestionEvenements()
     {
         if (Input.GetKeyDown("e"))
         {
@@ -86,7 +86,7 @@ public class Micro : MonoBehaviour
         }
     }
 
-    public void Enregistrer()
+    public virtual void Enregistrer()
     {
         if (this.nouvelleCible)
         {
@@ -109,7 +109,7 @@ public class Micro : MonoBehaviour
     }
 
 
-    public void Jouer()
+    public virtual void Jouer()
     {
         if (this.lectureEnCours)
         {
@@ -124,13 +124,16 @@ public class Micro : MonoBehaviour
     }
 
 
-    public void Desenregistrer()
+    public virtual void Desenregistrer()
     {
         if (this.cibleActuelle)
         {
             this.cibleActuelle.SortieEnregistrement(this.gameObject);
             this.cibleActuelle = null;
         }
+
+        this.lectureEnCours = false;
+        this.off.TransitionTo(this.transition);
     }
 
 
@@ -138,10 +141,10 @@ public class Micro : MonoBehaviour
     //*****************************************************************************************************
     //UPDATE
     //*****************************************************************************************************
-    void Update()
+    private void Update()
     {
         //surveille les évènements claviers
-        this.gestionEvenements();
+        this.GestionEvenements();
 
         //le rayon
         Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.up));
