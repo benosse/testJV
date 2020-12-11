@@ -6,7 +6,8 @@ using System.Linq;
 
 /*
 BZ
-Le troupeau implément ITransmetFrequence : qaund sa fréquence change, il la transmet à tous ses enfants
+TODO : le refaire avec un navmesh pour gérer la destination
+En faire un préfab, pouvoir indiquer le nombre de créatures qu'on veut, leur type...
 */
 public class TroupeauMouton : MonoBehaviour
 {
