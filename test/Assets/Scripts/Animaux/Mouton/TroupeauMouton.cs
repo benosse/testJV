@@ -4,6 +4,8 @@ using UnityEngine;
 //utilitaires de tri
 using System.Linq;
 
+using UnityEngine.AI;
+
 /*
 BZ
 TODO : le refaire avec un navmesh pour gérer la destination
@@ -77,11 +79,24 @@ public class TroupeauMouton : MonoBehaviour
             this.centre = this.centre / this.moutons.Count;
             this.centre.y = 0;
 
+
+            Vector3 destination = this.centre + Random.onUnitSphere * this.rayonMax;
+
+            NavMeshHit hit;
+            int masque = 1 << NavMesh.GetAreaFromName("Moutons");
+            NavMesh.SamplePosition(destination, out hit, this.rayonMax, masque);
+
+            this.centre = hit.position;
+    
+
+
             //bouge le centre aléatoirement
             //todo : vérfier que le nouveau centre est sur la map
+            /*
             Vector2 random = Random.insideUnitCircle.normalized;
             this.centre = this.centre + new Vector3(random.x, 0, random.y) * this.rayonMax;
             this.centre.y = 0;
+            */
             this.cube.transform.position = this.centre;
 
             //trie la liste des moutons en fonction du nouveau centre
