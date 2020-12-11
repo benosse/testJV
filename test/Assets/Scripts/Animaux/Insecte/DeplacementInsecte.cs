@@ -44,7 +44,7 @@ public class DeplacementInsecte : MonoBehaviour
     private void Update()
     {
         //update animator
-        this.anim.SetFloat(vitesseHash, this.agent.velocity.magnitude);
+        //this.anim.SetFloat(vitesseHash, this.agent.velocity.magnitude);
 
         //stop
         if (this.enMouvement)

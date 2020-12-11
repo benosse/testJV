@@ -14,7 +14,7 @@ public class DeplacementLapin : MonoBehaviour
 
     //animation
     private Animator anim;
-    private int vitesseHash = Animator.StringToHash("Vitesse");
+    private int vitesseHash = Animator.StringToHash("Speed");
 
     private void Awake()
     {
