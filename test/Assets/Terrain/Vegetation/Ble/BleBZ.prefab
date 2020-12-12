@@ -1,5 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!205 &6020979525740982215
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753406699735862180}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 1, z: 0}
+  m_Size: 2
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.052987892
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8113619696798689905}
+  - screenRelativeHeight: 0.052987892
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.052987892
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!114 &8312381736521708538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +38,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enveloppe: {fileID: 0}
-  nomEnveloppe: EnveloppeBle
 --- !u!1001 &7446925741132805877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91,6 +115,12 @@ PrefabInstance:
 --- !u!1 &7753406699735862180 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 675f4d05cebd9b4459c70e15341ea49f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7446925741132805877}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8113619696798689905 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 675f4d05cebd9b4459c70e15341ea49f,
     type: 3}
   m_PrefabInstance: {fileID: 7446925741132805877}
   m_PrefabAsset: {fileID: 0}

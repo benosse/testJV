@@ -165,14 +165,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32bb8b3231b1ff3f86b94d7072f1ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enveloppe: {fileID: 0}
+  audioLib: {fileID: 0}
   valeurBrute: 0
   valeurDouce: 0
-  valeurTrigger: 0
+  phase: 0
   periode: 0
   modulo: 4
   dureeAttack: 0.25
+  formeAttack: 0
   dureeDecay: 0
+  formeDecay: 0
   dureeSustain: 0.25
+  formeSustain: 0
   dureeRelease: 0
+  formeRelease: 0
   dureeTotale: 0.5
+  seuil: 0
+  smoothEnveloppe: 100
+  reset: 1
+  smoothReset: 0
+  trigger: 0

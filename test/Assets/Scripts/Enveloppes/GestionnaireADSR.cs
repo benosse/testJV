@@ -10,6 +10,8 @@ Parent de toutes les enveloppes
 
 //déclare hors de la classe un type "delegate" qui correspond à une fonction qui prend un float en entrée
 //todo : déclarer toutes les delegate du jeu dans un endroit précis? là on a deux fois la même pour metronome et enveloppe
+
+//TODO 12/12 / refaire avec la bonne sytnaxe et prévoir les réenregistrements qui marchent sûrement pas très bien en l'état actuel (pas de désenregistrementDoux par ex?)
 public delegate void Del(float valeur);
 
 
@@ -250,6 +252,12 @@ public class GestionnaireADSR : MonoBehaviour
     public void EnregistrerDoux(Del fonction)
     {
         this.enregistrementsDoux.Add(fonction);
+        Debug.Log("enveloppe" + this.name + " nb "+ this.enregistrementsDoux.Count);
+    }
+
+    public void DesenregistrerDoux(Del fonction)
+    {
+        this.enregistrementsDoux.Remove(fonction);
     }
 
     public void EnregistrerTrigger(Del fonction)

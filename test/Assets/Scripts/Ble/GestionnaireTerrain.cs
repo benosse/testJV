@@ -15,14 +15,26 @@ public class GestionnaireTerrain : MonoBehaviour
     void Start()
     {
         this.data = gameObject.GetComponent<Terrain>().terrainData;
-        /*
+
+       
+        //crée un préfab pour chaque tree du terrain
+        //à terme il faudra sans doute faire des tris en fonction de leurs préfab etc...
+        
+        
         for (int i = 0; i<data.treeInstanceCount; i++)
         {
-            GameObject prefab = data.treePrototypes[this.data.treeInstances[i].prototypeIndex].prefab;
-            Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            TreeInstance terrainTree = this.data.treeInstances[i];
+            GameObject prefab = data.treePrototypes[terrainTree.prototypeIndex].prefab;
+            GameObject tree = Instantiate(prefab, this.transform.position + Vector3.Scale(terrainTree.position, this.data.size), Quaternion.Euler(new Vector3(0,Mathf.Rad2Deg * terrainTree.rotation,0)), gameObject.transform);
+
+            //enregistre le tree à la bonne enveloppe
+            tree.GetComponent<DeplacementBle>().SetEnveloppe(this.enveloppe);
         }
-        */
-        //this.data.SetTreeInstances(new TreeInstance[0], false);
+        
+
+         //cache la  végétation du terrain
+        gameObject.GetComponent<Terrain>().drawTreesAndFoliage = false;
+        
         
     }
 
