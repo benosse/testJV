@@ -7,16 +7,18 @@ BZ
 TODO UTILISER ONBECAMEVISIBLE POUR TOUT gains de perf de folie
 //prévoir tout de même des exceptions, si on est en train d'enregistrer un objet par exemple
 */
-public class DeplacementBle : MonoBehaviour
+public class Ble : ActivationParDistance
 {
 
     public GestionnaireADSR enveloppe;
     private Material mat;
+    private bool enregistre = false;
 
 
     void Start()
     {
         this.mat = gameObject.GetComponent<Renderer> ().material;
+        this.enabled = false;
     }
 
 
@@ -29,20 +31,24 @@ public class DeplacementBle : MonoBehaviour
     public void SetEnveloppe(GestionnaireADSR enveloppe)
     {
         this.enveloppe = enveloppe;
-        
     }
 
 
-    void OnBecameInvisible()
+    protected override void OnBecameInvisible()
     {
-        this.enveloppe.DesenregistrerDoux(Bouger);
-        this.enabled = false;
+          base.OnBecameInvisible();
     }
 
 
-    void OnBecameVisible()
+    protected override void OnBecameVisible()
     {
-        this.enabled = true;
-        this.enveloppe.EnregistrerDoux(Bouger);
+        base.OnBecameVisible();
+
+        //on se réenregistre seulement si on est pas déjà enregistré
+        if (!this.enregistre)
+        {
+            this.enveloppe.EnregistrerDoux(Bouger);
+            this.enregistre = true;
+        } 
     }
 }

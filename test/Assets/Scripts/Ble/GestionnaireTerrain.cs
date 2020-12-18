@@ -28,7 +28,7 @@ public class GestionnaireTerrain : MonoBehaviour
             GameObject tree = Instantiate(prefab, this.transform.position + Vector3.Scale(terrainTree.position, this.data.size), Quaternion.Euler(new Vector3(0,Mathf.Rad2Deg * terrainTree.rotation,0)), gameObject.transform);
 
             //enregistre le tree à la bonne enveloppe
-            tree.GetComponent<DeplacementBle>().SetEnveloppe(this.enveloppe);
+            tree.GetComponent<Ble>().SetEnveloppe(this.enveloppe);
         }
         
 
