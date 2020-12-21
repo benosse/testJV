@@ -6,8 +6,8 @@ using System.Collections.Generic;
 /********************************************************************************
 BZ
 GestionnaireOscilloSix gère l'audiolib oscilloSix de son gameobject notamment par l'intérmediaire d'enveloppes
-Il implémente l'interface IAudioLibEnregistrable pour pouvoir être ciblé par un micro
-Dans ce cas il met à jour l'oscillo de son gameobject et de ses clones dans les micros
+Il implémente l'interface IGestionnaireAudioLib qui décrit notamment les méthodes pour enregistrer l'objet (cloner supprimer) et setFrequence
+Si ce gestionnaire est cloné, il met à jour l'oscillo de son gameobject et de ses clones dans les micros
 *********************************************************************************/
 
 
@@ -53,15 +53,15 @@ public class GestionnaireOscilloSix : MonoBehaviour, IGestionnaireAudioLib
 
         if (enveloppeGain)
         {
-            enveloppeGain.EnregistrerBrut(setGain);
+            enveloppeGain.UpdateValeurBrute += SetGain;
         }
         if (enveloppeNbHarmo)
         {
-            enveloppeNbHarmo.EnregistrerBrut(SetNbHarmoniques);
+            enveloppeGain.UpdateValeurBrute += SetNbHarmoniques;
         }
         if (enveloppeMidFreq)
         {
-            enveloppeMidFreq.EnregistrerBrut(SetMidFreq);
+            enveloppeGain.UpdateValeurBrute += SetMidFreq;
         }
     }
 
@@ -71,7 +71,7 @@ public class GestionnaireOscilloSix : MonoBehaviour, IGestionnaireAudioLib
      //ils mettent également à jour les clones
     //*****************************************************************************************************
   
-    public void setGain(float valeur)
+    public void SetGain(float valeur)
     {
         this.gain = valeur;
 

@@ -55,8 +55,8 @@ public class TroupeauMouton : MonoBehaviour
 
     void Start()
     {
-        this.enveloppe.EnregistrerDoux(Bouger);
-        this.enveloppe.EnregistrerTrigger(TriggerBouger);
+        this.enveloppe.UpdateValeurDouce += Bouger;
+        this.enveloppe.UpdatePhase += TriggerBouger;
 
         this.rayonMax = 40;
         this.rayonMin = 8;

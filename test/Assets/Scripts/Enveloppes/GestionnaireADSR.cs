@@ -3,30 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Required when Using UI elements.
 
+
 /***************************************************************************************
 BZ et Nico
-Parent de toutes les enveloppes
+Pour s'enregistrer aux évènements de l'enveloppe : 
+enveloppe.UpdateValeurBrute += monAction(float)
+enveloppe.UpdateValeurDouce += monAction(float)
+enveloppe.UpdatePhase += monAction(float)
 ***************************************************************************************/
-
-//déclare hors de la classe un type "delegate" qui correspond à une fonction qui prend un float en entrée
-//todo : déclarer toutes les delegate du jeu dans un endroit précis? là on a deux fois la même pour metronome et enveloppe
-
-//TODO 12/12 / refaire avec la bonne sytnaxe et prévoir les réenregistrements qui marchent sûrement pas très bien en l'état actuel (pas de désenregistrementDoux par ex?)
-public delegate void Del(float valeur);
-
-
 
 public class GestionnaireADSR : MonoBehaviour
 {
 
     [SerializeField] protected Hv_adsr_AudioLib audioLib;
-
     protected Metronome metronome;
-
-    //la liste de fonctions déléguées
-    protected List<Del> enregistrementsBruts;
-    protected List<Del> enregistrementsDoux;
-    protected List<Del> enregistrementsTrigger;
 
     [SerializeField] protected float valeurBrute;
     [SerializeField] protected float valeurDouce;
@@ -39,7 +29,6 @@ public class GestionnaireADSR : MonoBehaviour
         cosinus,
         lineaire
     }
-
     public enum choixPeriode
     {
         blanche,
@@ -47,33 +36,26 @@ public class GestionnaireADSR : MonoBehaviour
         croche,
         dbCroche,
         tpCroche,
-        qdCroche
+        qdCroche,
+        mesure
     };
 
     //la periode de l'enveloppe (définie dans l'inspecteur)
     public choixPeriode periode;
-    //enregistrement de la valeur de periode en string
-    private string periodeString;
     //la fraction de noire correspondant à la string periode
     private float periodeFloat;
-    
-
     //la periode de la noire donnée par le métronome
     private float periodeNoire;
-
     //modulo de la période (si on veut une noire sur 4 par exemple...)
     [Range(1, 100)] public int modulo;
 
     //les valeurs en pourcentage de chaque étape
     [Range(0.0f, 2.0f)] public float dureeAttack;
     public forme formeAttack;
-
     [Range(0.0f, 2.0f)] public float dureeDecay;
     public forme formeDecay;
-
     [Range(0.0f, 2.0f)] public float dureeSustain;
     public forme formeSustain;
-
     [Range(0.0f, 2.0f)] public float dureeRelease;
     public forme formeRelease;
 
@@ -81,32 +63,20 @@ public class GestionnaireADSR : MonoBehaviour
     [SerializeField] private float dureeTotale;
 
     [Range(0.0f, 1.0f)] public float seuil;
-
     [Range(0.0f, 2000f)] public float smoothEnveloppe;
 
 
     public bool reset;
     public bool smoothReset;
-
-
     public bool trigger;
-
-
-
-
-    public void Awake()
-    {
-        enregistrementsBruts = new List<Del>();
-        enregistrementsDoux = new List<Del>();
-        enregistrementsTrigger = new List<Del>();
-    }
 
 
     public virtual void Start()
     {
-        //enregistrement de l'enveloppe aurpès du métronome
+        
         this.metronome = GameObject.Find("Metronome").GetComponent<Metronome>();
-        this.metronome.EnregistrerPeriodeNoire(ChangementDeBPM);
+        //enregistrement de l'enveloppe aurpès du métronome une fois pour le bpm
+        this.metronome.UpdatePeriodeNoire += ChangementDeBPM;
 
         //récupération de l'audioLib
         this.audioLib = GetComponent<Hv_adsr_AudioLib>();
@@ -116,9 +86,54 @@ public class GestionnaireADSR : MonoBehaviour
         this.audioLib.FloatReceivedCallback += this.UpdateEnveloppe;
 
         this.SetAudioLib();
+        //enregistrement au métronome à la période voulue (blanche, noire, mesure...)
         this.EnregistrerAuMetronome();
     }
 
+
+    /******************************************************************************************************
+    Enregistrements d'objets extérieurs auprès de l'enveloppe
+    ******************************************************************************************************/
+    public delegate void ActionUpdate<T>(T valeur);
+    public event ActionUpdate <float> UpdateValeurBrute;
+    public event ActionUpdate <float> UpdateValeurDouce;
+    public event ActionUpdate <float> UpdatePhase;
+
+    //Cette fonction est un callBack : elle est appelée automatiquement à chaque fois que l'audiolib envoie une nouvelle valeur 'mes'
+    private void UpdateEnveloppe(Hv_adsr_AudioLib.FloatMessage mes)
+    {
+        switch (mes.receiverName)
+        {
+            case "envAdsr":
+                this.valeurBrute = mes.value;
+                if (this.UpdateValeurBrute != null)
+                {
+                    this.UpdateValeurBrute(this.valeurBrute);
+                }      
+                break;
+
+            case "smoothedEnvAdsr":
+                this.valeurDouce = mes.value;
+                if (this.UpdateValeurDouce != null)
+                {
+                    this.UpdateValeurDouce(this.valeurDouce);
+                }
+                break;
+
+            case "phaseAdsr":
+                this.phase = mes.value;
+                if (this.UpdatePhase != null)
+                {
+                    this.UpdatePhase(this.phase);
+                }
+                break;
+        }
+    }
+
+
+    /******************************************************************************************************
+    Méthodes internes
+    ******************************************************************************************************/
     //OnValidate est une méthode appelée automatiquement par unity quand une valeur est changée depuis l'inspecteur
     private void OnValidate()
     {
@@ -174,7 +189,6 @@ public class GestionnaireADSR : MonoBehaviour
     }
 
 
-
     //quand la periode noire change,  l'enveloppe recalcule la durée de sustain, decay, attack, release
     public void ChangementDeBPM(float periodeNoire)
     {
@@ -192,7 +206,6 @@ public class GestionnaireADSR : MonoBehaviour
             this.TriggerADSR();
         }
     }
-
 
 
 
@@ -226,85 +239,42 @@ public class GestionnaireADSR : MonoBehaviour
         this.audioLib.SetFloatParameter(Hv_adsr_AudioLib.Parameter.Smoothenvadsr, this.smoothEnveloppe);
     }
 
-    //se réenregistre au métronome
+    //Enregistrement aux évènements du métronome
+    //on se désenregistre avant pour être sûr de pas accumuler les enregistrements
     void EnregistrerAuMetronome()
     {
-        //Désenregistrement au metronome précédent
-        this.metronome.Desenregistrer(this.periodeString, UpdateMetronome);
-
-        //Enregistrement au nouvel évènement du métronome
-        this.periodeString = this.periode.ToString();
-        this.metronome.Enregistrer(this.periodeString, UpdateMetronome);
-    }
-
-
-
-
-    /******************************************************************************************************
-    Enregistrements auprès de l'enveloppe
-    ******************************************************************************************************/
-
-    //ajoute la fonction à la liste de fonctions à appeler quand le paramètre change.
-    public void EnregistrerBrut(Del fonction)
-    {
-        this.enregistrementsBruts.Add(fonction);
-    }
-    public void EnregistrerDoux(Del fonction)
-    {
-        this.enregistrementsDoux.Add(fonction);
-        Debug.Log("enveloppe" + this.name + " nb "+ this.enregistrementsDoux.Count);
-    }
-
-    public void DesenregistrerDoux(Del fonction)
-    {
-        this.enregistrementsDoux.Remove(fonction);
-    }
-
-    public void EnregistrerTrigger(Del fonction)
-    {
-        this.enregistrementsTrigger.Add(fonction);
-    }
-
-    //Cette fonction est un callBack : elle est appelée automatiquement à chaque fois que l'audiolib envoie une nouvelle valeur 'mes'
-    private void UpdateEnveloppe(Hv_adsr_AudioLib.FloatMessage mes)
-    {
-        switch (mes.receiverName)
+        switch (this.periode.ToString())
         {
-            case "envAdsr":
-                //enrgistre la nouvelle valeur
-                this.valeurBrute = mes.value;
-
-                //préviens les objets enregistrés
-                foreach (Del fonction in enregistrementsBruts)
-                {
-                    fonction(this.valeurBrute);
-                }
-
+            case "blanche":
+            this.metronome.UpdateStaticBlanche -= this.UpdateMetronome;
+                this.metronome.UpdateStaticBlanche += this.UpdateMetronome;
                 break;
-
-            case "smoothedEnvAdsr":
-                //enrgistre la nouvelle valeur
-                this.valeurDouce = mes.value;
-
-                //préviens les objets enregistrés
-                foreach (Del fonction in enregistrementsDoux)
-                {
-                    fonction(this.valeurDouce);
-                }
-
+            case "noire":
+                this.metronome.UpdateStaticNoire -= this.UpdateMetronome;
+                this.metronome.UpdateStaticNoire += this.UpdateMetronome;
                 break;
-
-            case "phaseAdsr":
-                //enrgistre la nouvelle valeur
-                this.phase = mes.value;
-
-                //préviens les objets enregistrés
-                foreach (Del fonction in enregistrementsTrigger)
-                {
-                    fonction(mes.value);
-                }
-
+            case "croche":
+                this.metronome.UpdateStaticCroche -= this.UpdateMetronome;
+                this.metronome.UpdateStaticCroche += this.UpdateMetronome;
                 break;
-        }
+            case "dbCroche":
+                this.metronome.UpdateStaticDbCroche -= this.UpdateMetronome;
+                this.metronome.UpdateStaticDbCroche += this.UpdateMetronome;
+                break;
+            case "tpcroche":
+                this.metronome.UpdateStaticTpCroche -= this.UpdateMetronome;
+                this.metronome.UpdateStaticTpCroche += this.UpdateMetronome;
+                break;
+            case "qdCroche":
+                this.metronome.UpdateStaticQdCroche -= this.UpdateMetronome;
+                this.metronome.UpdateStaticQdCroche += this.UpdateMetronome;
+                break;
+            case "mesure":
+                this.metronome.UpdateStaticMesure -= this.UpdateMetronome;
+                this.metronome.UpdateStaticMesure += this.UpdateMetronome;
+                break;
+            default:
+            break;
+        }         
     }
 }

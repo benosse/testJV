@@ -34,8 +34,7 @@ public class DeplacementInsecte : MonoBehaviour
 
     private void Start()
     {
-        this.enveloppe.EnregistrerTrigger(Bouger);
-
+        this.enveloppe.UpdatePhase += Bouger;
         this.anim = GetComponent<Animator>();
     }
 

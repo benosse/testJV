@@ -3,40 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 //TODO
 /*
-refaire metronome + enveloppe.
-métro : il enregistre des fonctions delegate
-enveloppes : on règles a, d, s, r, et le trigger avec des sliders dans l'inspecteur
-
+BZ
+Déclenche des évènements en fonction des valeurs reçues (mesure, blanches, noires, etc...)
 */
 
-//déclaration des fonctions delegate
-public delegate void DelEnregistrementFloat(float valeur);
-public delegate void DelEnregistrementInt(int valeur);
+
 
 public class Metronome : MonoBehaviour
 {
     //la librairie
     private Hv_metronome_AudioLib metronomeScript;
 
-    //listes des méthodes enregistrées
-    private List<DelEnregistrementInt> enregistrementsMesureCount;
-    private List<DelEnregistrementFloat> enregistrementsPeriodeNoire;
 
-    private List<DelEnregistrementInt> enregistrementsStaticMesure;
-    private List<DelEnregistrementInt> enregistrementsStaticBlanche;
-    private List<DelEnregistrementInt> enregistrementsStaticNoire;
-    private List<DelEnregistrementInt> enregistrementsStaticCroche;
-    private List<DelEnregistrementInt> enregistrementsStaticDbCroche;
-    private List<DelEnregistrementInt> enregistrementsStaticTpCroche;
-    private List<DelEnregistrementInt> enregistrementsStaticQdCroche;
-
+    //les différents évènements
+    public delegate void ActionUpdate<T>(T valeur);
+    public event ActionUpdate <int> UpdateMesureCount;
+    public event ActionUpdate <float> UpdatePeriodeNoire;
+    public event ActionUpdate <int> UpdateStaticMesure;
+    public event ActionUpdate <int> UpdateStaticBlanche;
+    public event ActionUpdate <int> UpdateStaticNoire;
+    public event ActionUpdate <int> UpdateStaticCroche;
+    public event ActionUpdate <int> UpdateStaticDbCroche;
+    public event ActionUpdate <int> UpdateStaticTpCroche;
+    public event ActionUpdate <int> UpdateStaticQdCroche;
 
 
     private int metroMesureCount;
     private float periodeNoire;
-
 
     private int staticMesure;
     private int staticBlanche;
@@ -45,7 +41,6 @@ public class Metronome : MonoBehaviour
     private int staticDbCroche;
     private int staticTpCroche;
     private int staticQdCroche;
-
 
     private int mesure;
     private int blanche;
@@ -58,17 +53,6 @@ public class Metronome : MonoBehaviour
 
     void Awake()
     {
-        //creation des listes vide dans Awake() pour pouvoir y accéder dasn le Start() des enveloppes
-        this.enregistrementsMesureCount = new List<DelEnregistrementInt>();
-        this.enregistrementsPeriodeNoire = new List<DelEnregistrementFloat>();
-
-        this.enregistrementsStaticMesure = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticBlanche = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticNoire = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticCroche = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticDbCroche = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticTpCroche = new List<DelEnregistrementInt>();
-        this.enregistrementsStaticQdCroche = new List<DelEnregistrementInt>();
     }
 
 
@@ -80,6 +64,10 @@ public class Metronome : MonoBehaviour
         this.metronomeScript.FloatReceivedCallback += this.UpdateMetronome;
     }
 
+    /*
+    Update appelé à chaque message reçu du métronome
+    Enregistre la valeur et déclenche l'évènement approprié
+    */
 
     void UpdateMetronome(Hv_metronome_AudioLib.FloatMessage mes)
     {
@@ -87,125 +75,75 @@ public class Metronome : MonoBehaviour
         switch (mes.receiverName)
         {
             case "metroMesureCount":
-
-
-                //enregistre la nouvelle valeur
-                this.metroMesureCount = (int)mes.value;
-                //Debug.Log("metronome nouvelle mesureCount : " + this.metroMesureCount);
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsMesureCount)
+                this.metroMesureCount = (int) mes.value; 
+                if ( this.UpdateMesureCount != null)
                 {
-                    fonction(this.metroMesureCount);
+                    this.UpdateMesureCount((int) mes.value);
                 }
-
                 break;
 
             case "periodeNoire":
-
-                //enregistre la nouvelle valeur
                 this.periodeNoire = mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementFloat fonction in this.enregistrementsPeriodeNoire)
+                if ( this.UpdatePeriodeNoire != null)
                 {
-                    fonction(this.periodeNoire);
+                    this.UpdatePeriodeNoire(mes.value);
                 }
-
                 break;
 
             case "staticMesure":
-
-                //enregistre la nouvelle valeur
-                this.staticMesure = (int)mes.value;
-                //Debug.Log("metronome nouvelle staticMesure : " + this.metroMesureCount);
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticMesure)
+                this.staticMesure = (int) mes.value;
+                if ( this.UpdateStaticMesure != null)
                 {
-                    fonction(this.staticMesure);
+                    this.UpdateStaticMesure((int) mes.value);
                 }
-
                 break;
 
             case "staticBlanche":
-
-                //enregistre la nouvelle valeur
-                this.staticBlanche = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticBlanche)
+                this.staticBlanche = (int) mes.value;
+                if ( this.UpdateStaticBlanche != null)
                 {
-                    fonction(this.staticBlanche);
+                    this.UpdateStaticBlanche((int) mes.value);
                 }
-
                 break;
 
             case "staticNoire":
-
-                //enregistre la nouvelle valeur
-                this.staticNoire = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticNoire)
+                this.staticNoire = (int) mes.value;
+                if ( this.UpdateStaticNoire!= null)
                 {
-                    fonction(this.staticNoire);
+                    this.UpdateStaticNoire((int) mes.value);
                 }
-
                 break;
 
             case "staticCroche":
-
-                //enregistre la nouvelle valeur
-                this.staticCroche = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticCroche)
+                this.staticCroche = (int) mes.value;
+                if ( this.UpdateStaticCroche != null)
                 {
-                    fonction(this.staticCroche);
+                    this.UpdateStaticCroche((int) mes.value);
                 }
-
                 break;
 
             case "staticDbCroche":
-
-                //enregistre la nouvelle valeur
-                this.staticDbCroche = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticDbCroche)
-                {
-                    fonction(this.staticDbCroche);
+                this.staticDbCroche = (int) mes.value;
+                if ( this.UpdateStaticDbCroche != null) {
+                    this.UpdateStaticDbCroche((int) mes.value);
                 }
-
                 break;
 
             case "staticTpCroche":
-
-                //enregistre la nouvelle valeur
-                this.staticTpCroche = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticTpCroche)
+                this.staticTpCroche = (int) mes.value;
+                if ( this.UpdateStaticTpCroche!= null)
                 {
-                    fonction(this.staticTpCroche);
+                    this.UpdateStaticTpCroche((int) mes.value);
                 }
-
                 break;
 
             case "staticQdCroche":
-
-                //enregistre la nouvelle valeur
-                this.staticQdCroche = (int)mes.value;
-
-                //appelle les méthodes enregistrées
-                foreach (DelEnregistrementInt fonction in this.enregistrementsStaticQdCroche)
+                this.staticQdCroche = (int) mes.value;
+                if ( this.UpdateStaticQdCroche != null)
                 {
-                    fonction(this.staticQdCroche);
+                    this.UpdateStaticQdCroche((int) mes.value);
                 }
-
                 break;
-
 
             default:
                 break;
@@ -213,6 +151,7 @@ public class Metronome : MonoBehaviour
     }
 
 
+/*
     //enlève la méthode de la liste à appeler
     public void Desenregistrer(string nom, DelEnregistrementInt fonction)
     {
@@ -303,7 +242,7 @@ public class Metronome : MonoBehaviour
     {
         enregistrementsPeriodeNoire.Remove(fonction);
     }
-
+*/
 
 
 }

@@ -27,9 +27,9 @@ public class Ballon : MonoBehaviour
         blendShapeCount = skinnedMesh.blendShapeCount;
 
         //enregistrement auprès de l'enveloppe
-        if (enveloppeAnimation != null)
+        if (this.enveloppeAnimation != null)
         {
-            enveloppeAnimation.EnregistrerDoux (Animation);
+            this.enveloppeAnimation.UpdateValeurDouce += Animation;
         }
     }
 

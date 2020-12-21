@@ -10,37 +10,54 @@ verifie deux choses :
 
 public class ActivationParDistance : MonoBehaviour
 {
+    //si on est dans la zone de procimité du joueur
+    protected bool collision = false;
 
-    private bool collision = false;
 
+/*
+Event controllé par la proximité du joueur
+*/
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("entrée");
         this.collision = true;
         if (!this.enabled)
         {
-            this.enabled = true;
+            Activer();
         }    
     }
 
     private void OnTriggerExit(Collider other) {
         this.collision = false;
-        Debug.Log("sortie");
     }
 
+/*
+Event contôlé par la caméra et le LOD
+*/
     protected virtual void OnBecameInvisible()
     {
         if (!this.collision && this.enabled)
         {
-            this.enabled = false;  
+            Desactiver(); 
         }   
     }
-
 
     protected virtual void  OnBecameVisible()
     {
         if (!this.enabled)
         {
-            this.enabled = true;
+            Activer();
         }
+    }
+
+/*
+Active et désactive l'objet (enable)
+Si il y a d'autres opérations à faire avant de désactiver l'objet, overrider cette méthode dans les classes enfant
+*/
+    protected virtual void Activer()
+    {
+        this.enabled = true;
+    }
+    protected virtual void Desactiver()
+    {
+        this.enabled = false;
     }
 }

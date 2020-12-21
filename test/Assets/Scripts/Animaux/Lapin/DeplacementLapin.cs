@@ -30,7 +30,7 @@ public class DeplacementLapin : MonoBehaviour
         this.agent.speed = 16;
 
         //enregistrer à l'enveloppe
-        this.enveloppeBlendShape.EnregistrerDoux(Animer);
+        this.enveloppeBlendShape.UpdateValeurDouce += Animer;
     }
 
     private void Update() {

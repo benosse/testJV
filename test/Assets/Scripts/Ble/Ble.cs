@@ -12,7 +12,6 @@ public class Ble : ActivationParDistance
 
     public GestionnaireADSR enveloppe;
     private Material mat;
-    private bool enregistre = false;
 
 
     void Start()
@@ -34,21 +33,16 @@ public class Ble : ActivationParDistance
     }
 
 
-    protected override void OnBecameInvisible()
+    protected override void Activer()
     {
-          base.OnBecameInvisible();
+        Debug.Log("child");
+        base.Activer();
+        this.enveloppe.UpdateValeurDouce += Bouger;
     }
 
-
-    protected override void OnBecameVisible()
-    {
-        base.OnBecameVisible();
-
-        //on se réenregistre seulement si on est pas déjà enregistré
-        if (!this.enregistre)
-        {
-            this.enveloppe.EnregistrerDoux(Bouger);
-            this.enregistre = true;
-        } 
+    protected override void Desactiver()
+    {   Debug.Log("child out");
+        this.enveloppe.UpdateValeurDouce -= Bouger;
+        base.Desactiver();
     }
 }
